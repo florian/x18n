@@ -20,12 +20,21 @@ module.exports = function (grunt) {
 				src: ['<banner>', 'lib/x18n.js'],
 				dest: 'lib/x18n.js'
 			}
+		},
+
+		mocha: {
+			all: {
+				src: 'spec/index.html',
+				run: true
+			}
 		}
 
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-coffee');
+	grunt.loadNpmTasks('grunt-mocha');
 
+	grunt.registerTask('test', 'mocha');
 	grunt.registerTask('release', 'coffee concat');
 	grunt.registerTask('default', 'release');
 
