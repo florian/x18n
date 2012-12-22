@@ -26,4 +26,7 @@ module.exports = function (grunt) {
 
 	grunt.loadNpmTasks('grunt-contrib-coffee');
 
+	grunt.registerTask('release', 'coffee concat');
+	grunt.registerTask('default', 'release');
+
 };
