@@ -1,5 +1,5 @@
 // testem
-if (location.href.indexOf('http://localhost:7357') == 0) {
+if (location.href.indexOf('http://localhost:1221') == 0) {
     document.write('<script src="/testem.js"><\/script>');
 }
 
