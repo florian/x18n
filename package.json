@@ -1,0 +1,13 @@
+{
+	"name": "X18n",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"test": "grunt test"
+	},
+	"devDependencies": {
+		"grunt": "~0.3",
+		"grunt-contrib-coffee": "~0.3",
+		"grunt-mocha": "~0.1"
+	}
+}
