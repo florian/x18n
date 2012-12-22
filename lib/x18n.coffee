@@ -11,6 +11,9 @@ class X18n
 		merge: (one, two) ->
 
 	@register: (lang, dict) ->
+		# @dict[lang] = {} unless lang of @dict
+
+		@dict[lang] = @utils.merge(@dict[lang] || {}, dict)
 
 if typeof define is 'function' and define.amd
 	define ['Observable'], -> X18n
@@ -18,3 +21,7 @@ else if exports?
 	module.exports = X18n
 else
 	window.X18n = X18n
+
+###
+Can I drop @?
+###
