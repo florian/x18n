@@ -13,6 +13,13 @@ module.exports = function (grunt) {
 					'spec/spec.js': 'spec/spec.coffee'
 				}
 			}
+		},
+
+		concat: {
+			dist: {
+				src: ['<banner>', 'lib/x18n.js'],
+				dest: 'lib/x18n.js'
+			}
 		}
 
 	});
