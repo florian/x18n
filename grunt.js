@@ -27,6 +27,11 @@ module.exports = function (grunt) {
 				src: 'spec/index.html',
 				run: true
 			}
+		},
+
+		watch: {
+			files: ['lib/x18n.coffee', 'spec/spec.coffee'],
+			tasks: 'coffee'
 		}
 
 	});
