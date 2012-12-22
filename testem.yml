@@ -1,0 +1,4 @@
+framework: mocha
+test_page: spec/index.html
+launch_in_dev: [Chrome, Firefox, PhantomJS]
+port: 1221
