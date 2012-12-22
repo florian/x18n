@@ -15,6 +15,8 @@ class X18n
 
 		@dict[lang] = @utils.merge(@dict[lang] || {}, dict)
 
+		X18n.trigger('dict:change')
+
 if typeof define is 'function' and define.amd
 	define ['Observable'], -> X18n
 else if exports?
