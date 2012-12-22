@@ -7,6 +7,11 @@ class X18n
 	@availableLangs: []
 	@langs = []
 
+	@utils:
+		merge: (one, two) ->
+
+	@register: (lang, dict) ->
+
 if typeof define is 'function' and define.amd
 	define ['Observable'], -> X18n
 else if exports?
