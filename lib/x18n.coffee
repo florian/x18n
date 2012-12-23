@@ -6,7 +6,9 @@ class X18n
 	@chosenLocal: undefined
 
 	@availableLocales: []
-	@locales = []
+	@locales: []
+
+	@missingTranslations: {}
 
 	eventSystem = new Observable
 	@__observable = eventSystem.__observable
@@ -91,12 +93,17 @@ class X18n
 	oldT = window.t
 
 	@t: (key, interpolation) =>
-		tr = ''
+		tr = undefined
 		for local in @locales
 			tr = @utils.getByDotNotation(@dict[local], key)
-			break if tr
-		tr
+			if tr
+				break
+			else
+				@missingTranslations[local] = [] unless local of @missingTranslations
+				@missingTranslations[local].push(key)
+				@missingTranslations[local] = @utils.unique(@missingTranslations[local])
 
+		tr
 
 	@t.noConflict = ->
 		window.t = oldT
