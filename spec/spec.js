@@ -196,6 +196,11 @@
         });
         return expect(t('errors.presence')).to.equal('Not found');
       });
+      it("should populate @missingTranslation if the translation doesn't exist in some language", function() {
+        X18n.register('en', {});
+        t('register');
+        return expect(X18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register');
+      });
       return describe('noConflict', function() {
         return it('should restore the old t and return t', function() {
           var t;

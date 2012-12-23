@@ -121,6 +121,11 @@ describe 'X18n', ->
 			X18n.register 'en', errors: presence: 'Not found'
 			expect(t('errors.presence')).to.equal('Not found')
 
+		it "should populate @missingTranslation if the translation doesn't exist in some language", ->
+			X18n.register 'en', {}
+			t('register')
+			expect(X18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register')
+
 		describe 'noConflict', ->
 			it 'should restore the old t and return t', ->
 				t = window.t.noConflict()
