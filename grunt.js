@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 		coffee: {
 			compile: {
 				files: {
-					'lib/x18n.js': ['lib/observable.coffee', 'lib/x18n.coffee'],
+					'lib/x18n.js': 'lib/x18n.coffee',
 					'spec/spec.js': 'spec/spec.coffee'
 				}
 			}
@@ -17,7 +17,7 @@ module.exports = function (grunt) {
 
 		concat: {
 			dist: {
-				src: ['<banner>', 'lib/x18n.js'],
+				src: ['<banner>', 'lib/observable/lib/observable.js', 'lib/x18n.js'],
 				dest: 'lib/x18n.js'
 			}
 		},
@@ -31,7 +31,7 @@ module.exports = function (grunt) {
 
 		watch: {
 			files: ['lib/x18n.coffee', 'spec/spec.coffee'],
-			tasks: 'coffee'
+			tasks: 'coffee concat'
 		}
 
 	});
