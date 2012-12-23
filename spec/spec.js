@@ -120,11 +120,23 @@
         return expect(X18n.defaultLocal).to.equal('en');
       });
     });
-    return describe('similiarLocales', function() {
+    describe('similiarLocales', function() {
       return it('should detect similiar locales', function() {
         X18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr'];
         return expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU']);
       });
+    });
+    return describe('sortLocales', function() {
+      return it('should set @locales to an array', function() {
+        X18n.sortLocales();
+        return expect(X18n.locales).to.be.an('array');
+      });
+      /*
+      		it should contain the chosen local first if set
+      		it should only contain available locales
+      		it should not contain duplicate entries
+      */
+
     });
   });
 

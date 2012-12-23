@@ -74,3 +74,14 @@ describe 'X18n', ->
 		it 'should detect similiar locales', ->
 			X18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr']
 			expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU'])
+
+	describe 'sortLocales', ->
+		it 'should set @locales to an array', ->
+			X18n.sortLocales()
+			expect(X18n.locales).to.be.an('array')
+
+		###
+		it should contain the chosen local first if set
+		it should only contain available locales
+		it should not contain duplicate entries
+		###
