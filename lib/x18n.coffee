@@ -18,8 +18,8 @@ class X18n
 	@utils:
 		merge: (one, two) ->
 			for k, v of two
-			   if typeof v is 'object'
-			     merge(one[k], v)
+			   if typeof v is 'object' and typeof one[k] is 'object'
+			     @merge(one[k], v)
 			   else
 			     one[k] = v
 
@@ -34,7 +34,7 @@ class X18n
 		getByDotNotation: (obj, key) ->
 			keys = key.split('.')
 
-			until keys.length is 0
+			until keys.length is 0 or obj is undefined
 				obj = obj[keys[0]]
 				keys.shift()
 
@@ -66,25 +66,23 @@ class X18n
 			l.toLowerCase().indexOf(local) is 0
 
 	@sortLocales: ->
-		locales = []
-
-		locales.push(@chosenLocal) if @chosenLocal
-
-		locales.push(
-			@similiarLocales(@chosenLocal)...,
+		_locales = [
+			@chosenLocal
+			@similiarLocales(@chosenLocal)...
 			@detectLocal(),
-			@similiarLocales(@detectLocal)...,
-
+			@similiarLocales(@detectLocal)...
 			@defaultlocal,
-			@similiarLocales(@defaultlocal)...
-		)
-
-		locales.push('en') if 'en' of @availableLocales
-
-		locales.push(
+			@similiarLocales(@defaultlocal)
+			'en'
 			@similiarLocales('en')...,
-			@availableLocales...
-		)
+		]
+
+		_locales.shift() unless @chosenLocal
+
+		locales = []
+		locales.push(local) for local in locales when local in @availableLocales
+
+		locales.push(@availableLocales...)
 
 		@trigger('lang:change')
 
@@ -93,8 +91,13 @@ class X18n
 	oldT = window.t
 
 	@t: (key, interpolation) =>
+		tr = ''
+		for local in @locales
+			@sortLocales()
+			tr = @utils.getByDotNotation(@dict[local], key)
+			break if tr
+		tr
 
-		@utils.getByDotNotation(@dict, key)
 
 	@t.noConflict = ->
 		window.t = oldT
@@ -102,7 +105,7 @@ class X18n
 
 	window.t = @t
 
-	@on 'dict:change', -> @sortLocales()
+	@on 'dict:change', -> X18n.sortLocales()
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
