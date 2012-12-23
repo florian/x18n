@@ -69,3 +69,8 @@ describe 'X18n', ->
 		it 'should set @defaultLocal', ->
 			X18n.setDefault 'en'
 			expect(X18n.defaultLocal).to.equal('en')
+
+	describe 'similiarLocales', ->
+		it 'should detect similiar locales', ->
+			X18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr']
+			expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU'])

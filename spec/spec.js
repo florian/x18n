@@ -114,10 +114,16 @@
         return expect(X18n.chosenLocal).to.equal('de');
       });
     });
-    return describe('setDefault', function() {
+    describe('setDefault', function() {
       return it('should set @defaultLocal', function() {
         X18n.setDefault('en');
         return expect(X18n.defaultLocal).to.equal('en');
+      });
+    });
+    return describe('similiarLocales', function() {
+      return it('should detect similiar locales', function() {
+        X18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr'];
+        return expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU']);
       });
     });
   });
