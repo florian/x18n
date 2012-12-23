@@ -93,7 +93,6 @@ class X18n
 	@t: (key, interpolation) =>
 		tr = ''
 		for local in @locales
-			@sortLocales()
 			tr = @utils.getByDotNotation(@dict[local], key)
 			break if tr
 		tr
