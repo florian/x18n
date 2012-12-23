@@ -86,6 +86,8 @@ class X18n
 			@availableLocales...
 		)
 
+		X18n.trigger('lang:change')
+
 		@locales = @utils.unique(locales)
 
 	oldT = window.t
