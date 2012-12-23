@@ -68,7 +68,7 @@ class X18n
 	@sortLocales: ->
 		locales = []
 
-		locales.push(@chosenLocal) unless @chosenLocal
+		locales.push(@chosenLocal) if @chosenLocal
 
 		locales.push(
 			@similiarLocales(@chosenLocal)...,
