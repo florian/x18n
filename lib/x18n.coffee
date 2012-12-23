@@ -5,8 +5,8 @@ class X18n
 	@defaultlocal: 'en'
 	@chosenLocal: undefined
 
-	@availablelocals: []
-	@locals = []
+	@availableLocales: []
+	@locales = []
 
 	eventSystem = new Observable
 	@__observable = eventSystem.__observable
@@ -26,10 +26,15 @@ class X18n
 		filter: (arr, fn) ->
 			v for v in arr when fn(v)
 
+		unique: (arr) ->
+			ret = {}
+			ret[v] = v for v in arr
+			v for k, v of ret
+
 	@register: (local, dict) ->
 		unless local of @dict
 			@dict[local] = {}
-			@availablelocals.push(local)
+			@availableLocales.push(local)
 
 		@utils.merge(@dict[local], dict)
 
@@ -37,20 +42,21 @@ class X18n
 
 	@set: (local) ->
 		@chosenLocal = local
-		@sortLangs()
+		@sortLocales()
 
 	@setDefault: (local) ->
 		@defaultLocal = local
-		@sortLangs()
+		@sortLocales()
 
 	@detectLocal: -> navigator.userLanguage || navigator.language
 
 	@similiarLocales: (local) ->
-		# local = local.slice(0, 2).toLowerCase()
+		local = String(local).slice(0, 2).toLowerCase()
+		@utils.filter @availableLocales, (l) ->
+			return false if local is l
+			l.toLowerCase().indexOf(local) is 0
 
-		[]
-
-	@sortLangs: ->
+	@sortLocales: ->
 		locales = [
 			@chosenLocal
 			@similiarLocales(@chosenLocal)...
@@ -64,10 +70,12 @@ class X18n
 			'en'
 			@similiarLocales('en')...
 
-			@availablelocals...
+			@availableLocales...
 		]
 
 		locales.shift() unless @chosenLocal
+
+		@locales = @utils.unique(locales)
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
