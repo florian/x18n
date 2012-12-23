@@ -4,6 +4,9 @@ dict = X18n.dict
 describe 'X18n', ->
 	afterEach ->
 		dict = X18n.dict = {}
+		X18n.chosenLocal = undefined
+		X18n.defaultLocal = 'en'
+		X18n.availableLocales = []
 
 	describe 'utils', ->
 		describe 'merge', ->
@@ -23,6 +26,11 @@ describe 'X18n', ->
 				a = [1..9]
 				a = utils.filter a, (n) -> n % 2 == 0
 				expect(a).to.eql([2, 4, 6, 8])
+
+		describe 'unique', ->
+			it 'should remove duplicate entries', ->
+				a = utils.unique([1, 2, 1, 3, 1, 2])
+				expect(a).to.eql([1, 2, 3])
 
 	describe 'event system', ->
 		it 'should be available', ->

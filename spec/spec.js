@@ -7,7 +7,10 @@
 
   describe('X18n', function() {
     afterEach(function() {
-      return dict = X18n.dict = {};
+      dict = X18n.dict = {};
+      X18n.chosenLocal = void 0;
+      X18n.defaultLocal = 'en';
+      return X18n.availableLocales = [];
     });
     describe('utils', function() {
       describe('merge', function() {
@@ -45,7 +48,7 @@
           });
         });
       });
-      return describe('filter', function() {
+      describe('filter', function() {
         return it('should return an array with the filtered values', function() {
           var a;
           a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -53,6 +56,13 @@
             return n % 2 === 0;
           });
           return expect(a).to.eql([2, 4, 6, 8]);
+        });
+      });
+      return describe('unique', function() {
+        return it('should remove duplicate entries', function() {
+          var a;
+          a = utils.unique([1, 2, 1, 3, 1, 2]);
+          return expect(a).to.eql([1, 2, 3]);
         });
       });
     });
