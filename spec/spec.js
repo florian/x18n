@@ -5,12 +5,12 @@
 
   dict = X18n.dict;
 
-  describe('X18', function() {
+  describe('X18n', function() {
     afterEach(function() {
       return dict = X18n.dict = {};
     });
     describe('utils', function() {
-      return describe('merge', function() {
+      describe('merge', function() {
         it('should be able to merge a single object', function() {
           var a, b;
           a = {
@@ -43,6 +43,16 @@
               b: 2
             }
           });
+        });
+      });
+      return describe('filter', function() {
+        return it('should return an array with the filtered values', function() {
+          var a;
+          a = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+          a = utils.filter(a, function(n) {
+            return n % 2 === 0;
+          });
+          return expect(a).to.eql([2, 4, 6, 8]);
         });
       });
     });

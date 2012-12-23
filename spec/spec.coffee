@@ -1,7 +1,7 @@
 utils = X18n.utils
 dict = X18n.dict
 
-describe 'X18', ->
+describe 'X18n', ->
 	afterEach ->
 		dict = X18n.dict = {}
 
@@ -17,6 +17,12 @@ describe 'X18', ->
 				a = a: a: 1
 				b = a: b: 2
 				utils.merge(a: a: 1, b: 2)
+
+		describe 'filter', ->
+			it 'should return an array with the filtered values', ->
+				a = [1..9]
+				a = utils.filter a, (n) -> n % 2 == 0
+				expect(a).to.eql([2, 4, 6, 8])
 
 	describe 'event system', ->
 		it 'should be available', ->
