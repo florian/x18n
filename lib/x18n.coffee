@@ -18,7 +18,7 @@ class X18n extends new Observable
 		X18n.trigger('dict:change')
 
 if typeof define is 'function' and define.amd
-	define ['Observable'], -> X18n
+	define 'x18n', ['observable'], -> X18n
 else if exports?
 	module.exports = X18n
 else
