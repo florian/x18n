@@ -3,7 +3,7 @@ class X18n
 	@dict: {}
 	@prefetch: ['en']
 	@defaultlocal: 'en'
-	@setlocal: undefined
+	@chosenLocal: undefined
 	@availablelocals: []
 	@locals = []
 
@@ -29,10 +29,16 @@ class X18n
 		@trigger('dict:change')
 
 	@set: (local) ->
+		@chosenLocal = local
+		@sortLangs()
 
 	@setDefault: (local) ->
+		@defaultLocal = local
+		@sortLangs()
 
-	@detectLocal: ->
+	@detectLocal: -> navigator.userLanguage || navigator.language
+
+	@sortLangs: ->
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
