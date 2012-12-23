@@ -126,7 +126,7 @@
         return expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU']);
       });
     });
-    return describe('sortLocales', function() {
+    describe('sortLocales', function() {
       return it('should set @locales to an array', function() {
         X18n.sortLocales();
         return expect(X18n.locales).to.be.an('array');
@@ -137,6 +137,20 @@
       		it should not contain duplicate entries
       */
 
+    });
+    return describe('t', function() {
+      it('should be defined in the global and X18n scope', function() {
+        expect(window).to.have.property('t');
+        return expect(X18n).to.have.property('t');
+      });
+      return describe('noConflict', function() {
+        return it('should restore the old t and return t', function() {
+          var t;
+          t = window.t.noConflict();
+          expect(t).to.equal(X18n.t);
+          return window.t = t;
+        });
+      });
     });
   });
 

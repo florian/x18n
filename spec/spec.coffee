@@ -85,3 +85,14 @@ describe 'X18n', ->
 		it should only contain available locales
 		it should not contain duplicate entries
 		###
+
+	describe 't', ->
+		it 'should be defined in the global and X18n scope', ->
+			expect(window).to.have.property('t')
+			expect(X18n).to.have.property('t')
+
+		describe 'noConflict', ->
+			it 'should restore the old t and return t', ->
+				t = window.t.noConflict()
+				expect(t).to.equal(X18n.t)
+				window.t = t
