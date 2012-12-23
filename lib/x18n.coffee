@@ -1,4 +1,4 @@
-class X18n extends new Observable
+class X18n
 
 	@dict: {}
 	@prefetch: ['en']
@@ -6,6 +6,13 @@ class X18n extends new Observable
 	@setLang: undefined
 	@availableLangs: []
 	@langs = []
+
+	eventSystem = new Observable
+	@__observable = eventSystem.__observable
+	@on = eventSystem.on
+	@once = eventSystem.once
+	@off = eventSystem.off
+	@trigger = eventSystem.trigger
 
 	@utils:
 		merge: (one, two) ->
@@ -19,7 +26,7 @@ class X18n extends new Observable
 		@dict[lang] = {} unless lang of @dict
 		@utils.merge(@dict[lang], dict)
 
-		X18n.trigger('dict:change')
+		@trigger('dict:change')
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
