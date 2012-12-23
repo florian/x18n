@@ -110,7 +110,6 @@ describe 'X18n', ->
 
 		it 'should return the translation', ->
 			X18n.register 'de', user: 'benutzer'
-			# X18n.sortLocales()
 			expect(t('user')).to.equal('benutzer')
 
 		describe 'noConflict', ->
