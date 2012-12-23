@@ -10,7 +10,8 @@
       dict = X18n.dict = {};
       X18n.chosenLocal = void 0;
       X18n.defaultLocal = 'en';
-      return X18n.availableLocales = [];
+      X18n.availableLocales = [];
+      return X18n.__observable.events = {};
     });
     describe('utils', function() {
       describe('merge', function() {

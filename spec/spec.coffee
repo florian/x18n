@@ -7,6 +7,7 @@ describe 'X18n', ->
 		X18n.chosenLocal = undefined
 		X18n.defaultLocal = 'en'
 		X18n.availableLocales = []
+		X18n.__observable.events = {}
 
 	describe 'utils', ->
 		describe 'merge', ->
