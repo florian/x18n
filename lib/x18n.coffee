@@ -2,10 +2,10 @@ class X18n
 
 	@dict: {}
 	@prefetch: ['en']
-	@defaultLang: 'en'
-	@setLang: undefined
-	@availableLangs: []
-	@langs = []
+	@defaultlocal: 'en'
+	@setlocal: undefined
+	@availablelocals: []
+	@locals = []
 
 	eventSystem = new Observable
 	@__observable = eventSystem.__observable
@@ -22,11 +22,17 @@ class X18n
 			   else
 			     one[k] = v
 
-	@register: (lang, dict) ->
-		@dict[lang] = {} unless lang of @dict
-		@utils.merge(@dict[lang], dict)
+	@register: (local, dict) ->
+		@dict[local] = {} unless local of @dict
+		@utils.merge(@dict[local], dict)
 
 		@trigger('dict:change')
+
+	@set: (local) ->
+
+	@setDefault: (local) ->
+
+	@detectLocal: ->
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
