@@ -46,6 +46,15 @@
         });
       });
     });
+    describe('event system', function() {
+      return it('should be available', function() {
+        expect(X18n.__observable).to.be.an('object');
+        expect(X18n.on).to.be.a('function');
+        expect(X18n.once).to.be.a('function');
+        expect(X18n.off).to.be.a('function');
+        return expect(X18n.trigger).to.be.a('function');
+      });
+    });
     return describe('register', function() {
       it("should create a lang key in the dict if it doesn't exist", function() {
         X18n.register('en', {});

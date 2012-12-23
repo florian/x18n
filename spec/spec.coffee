@@ -18,6 +18,14 @@ describe 'X18', ->
 				b = a: b: 2
 				utils.merge(a: a: 1, b: 2)
 
+	describe 'event system', ->
+		it 'should be available', ->
+			expect(X18n.__observable).to.be.an('object')
+			expect(X18n.on).to.be.a('function')
+			expect(X18n.once).to.be.a('function')
+			expect(X18n.off).to.be.a('function')
+			expect(X18n.trigger).to.be.a('function')
+
 	describe 'register', ->
 		it "should create a lang key in the dict if it doesn't exist", ->
 			X18n.register 'en', {}
