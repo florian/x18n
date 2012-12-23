@@ -7,7 +7,7 @@ describe 'X18n', ->
 		X18n.chosenLocal = undefined
 		X18n.defaultLocal = 'en'
 		X18n.availableLocales = []
-		X18n.__observable.events = {}
+		X18n.sortLocales()
 
 	describe 'utils', ->
 		describe 'merge', ->
@@ -37,6 +37,11 @@ describe 'X18n', ->
 			it 'should return the specified value', ->
 				v = utils.getByDotNotation({a: b: c: 1}, 'a.b.c')
 				expect(v).to.equal(1)
+
+			it 'should never throw an error', ->
+				fn = ->
+					utils.getByDotNotation(a: 1, 'b.c')
+				expect(fn).not.to.throw()
 
 	describe 'event system', ->
 		it 'should be available', ->
@@ -102,6 +107,11 @@ describe 'X18n', ->
 		it 'should be defined in the global and X18n scope', ->
 			expect(window).to.have.property('t')
 			expect(X18n).to.have.property('t')
+
+		it 'should return the translation', ->
+			X18n.register 'de', user: 'benutzer'
+			# X18n.sortLocales()
+			expect(t('user')).to.equal('benutzer')
 
 		describe 'noConflict', ->
 			it 'should restore the old t and return t', ->

@@ -11,7 +11,7 @@
       X18n.chosenLocal = void 0;
       X18n.defaultLocal = 'en';
       X18n.availableLocales = [];
-      return X18n.__observable.events = {};
+      return X18n.sortLocales();
     });
     describe('utils', function() {
       describe('merge', function() {
@@ -67,7 +67,7 @@
         });
       });
       return describe('getByDotNotation', function() {
-        return it('should return the specified value', function() {
+        it('should return the specified value', function() {
           var v;
           v = utils.getByDotNotation({
             a: {
@@ -77,6 +77,15 @@
             }
           }, 'a.b.c');
           return expect(v).to.equal(1);
+        });
+        return it('should never throw an error', function() {
+          var fn;
+          fn = function() {
+            return utils.getByDotNotation({
+              a: 1
+            }, 'b.c');
+          };
+          return expect(fn).not.to["throw"]();
         });
       });
     });
@@ -165,6 +174,12 @@
       it('should be defined in the global and X18n scope', function() {
         expect(window).to.have.property('t');
         return expect(X18n).to.have.property('t');
+      });
+      it('should return the translation', function() {
+        X18n.register('de', {
+          user: 'benutzer'
+        });
+        return expect(t('user')).to.equal('benutzer');
       });
       return describe('noConflict', function() {
         return it('should restore the old t and return t', function() {
