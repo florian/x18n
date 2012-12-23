@@ -79,6 +79,14 @@ class X18n
 
 		@locales = @utils.unique(locales)
 
+	oldT = window.t
+
+	window.t = @t = (key, interpolation) ->
+
+	@t.noConflict = ->
+
+	@t.plural = (key, n) ->
+
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
 else if exports?
