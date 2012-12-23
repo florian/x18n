@@ -112,6 +112,15 @@ describe 'X18n', ->
 			X18n.register 'de', user: 'benutzer'
 			expect(t('user')).to.equal('benutzer')
 
+		it 'should loop through all available locales and return the first translation', ->
+			X18n.register 'de', {}
+			X18n.register 'en', user: 'user'
+			expect(t('user')).to.equal('user')
+
+		it 'should behave like utils.getByDotNotation', ->
+			X18n.register 'en', errors: presence: 'Not found'
+			expect(t('errors.presence')).to.equal('Not found')
+
 		describe 'noConflict', ->
 			it 'should restore the old t and return t', ->
 				t = window.t.noConflict()

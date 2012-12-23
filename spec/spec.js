@@ -181,6 +181,21 @@
         });
         return expect(t('user')).to.equal('benutzer');
       });
+      it('should loop through all available locales and return the first translation', function() {
+        X18n.register('de', {});
+        X18n.register('en', {
+          user: 'user'
+        });
+        return expect(t('user')).to.equal('user');
+      });
+      it('should behave like utils.getByDotNotation', function() {
+        X18n.register('en', {
+          errors: {
+            presence: 'Not found'
+          }
+        });
+        return expect(t('errors.presence')).to.equal('Not found');
+      });
       return describe('noConflict', function() {
         return it('should restore the old t and return t', function() {
           var t;
