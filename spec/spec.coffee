@@ -45,3 +45,13 @@ describe 'X18', ->
 			X18n.on 'dict:change', -> called = true
 			X18n.register 'en', {}
 			expect(called).to.be.true
+
+	describe 'set', ->
+		it 'should set @chosenLocal', ->
+			X18n.set 'de'
+			expect(X18n.chosenLocal).to.equal('de')
+
+	describe 'setDefault', ->
+		it 'should set @defaultLocal', ->
+			X18n.setDefault 'en'
+			expect(X18n.defaultLocal).to.equal('en')

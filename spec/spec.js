@@ -55,7 +55,7 @@
         return expect(X18n.trigger).to.be.a('function');
       });
     });
-    return describe('register', function() {
+    describe('register', function() {
       it("should create a lang key in the dict if it doesn't exist", function() {
         X18n.register('en', {});
         return expect(dict).to.have.property('en').that.is.an('object');
@@ -86,6 +86,18 @@
         });
         X18n.register('en', {});
         return expect(called).to.be["true"];
+      });
+    });
+    describe('set', function() {
+      return it('should set @chosenLocal', function() {
+        X18n.set('de');
+        return expect(X18n.chosenLocal).to.equal('de');
+      });
+    });
+    return describe('setDefault', function() {
+      return it('should set @defaultLocal', function() {
+        X18n.setDefault('en');
+        return expect(X18n.defaultLocal).to.equal('en');
       });
     });
   });
