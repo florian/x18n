@@ -85,6 +85,12 @@ describe 'X18n', ->
 			X18n.sortLocales()
 			expect(X18n.locales).to.be.an('array')
 
+		it 'should trigger lang:change', ->
+			called = false
+			X18n.on 'lang:change', -> called = true
+			X18n.sortLocales()
+			expect(called).to.be.true
+
 		###
 		it should contain the chosen local first if set
 		it should only contain available locales

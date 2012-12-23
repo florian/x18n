@@ -140,9 +140,18 @@
       });
     });
     describe('sortLocales', function() {
-      return it('should set @locales to an array', function() {
+      it('should set @locales to an array', function() {
         X18n.sortLocales();
         return expect(X18n.locales).to.be.an('array');
+      });
+      return it('should trigger lang:change', function() {
+        var called;
+        called = false;
+        X18n.on('lang:change', function() {
+          return called = true;
+        });
+        X18n.sortLocales();
+        return expect(called).to.be["true"];
       });
       /*
       		it should contain the chosen local first if set
