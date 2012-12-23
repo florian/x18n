@@ -23,6 +23,9 @@ class X18n
 			   else
 			     one[k] = v
 
+		filter: (arr, fn) ->
+			v for v in arr when fn(v)
+
 	@register: (local, dict) ->
 		unless local of @dict
 			@dict[local] = {}
@@ -42,7 +45,29 @@ class X18n
 
 	@detectLocal: -> navigator.userLanguage || navigator.language
 
+	@similiarLocales: (local) ->
+		# local = local.slice(0, 2).toLowerCase()
+
+		[]
+
 	@sortLangs: ->
+		locales = [
+			@chosenLocal
+			@similiarLocales(@chosenLocal)...
+
+			@detectLocal()
+			@similiarLocales(@detectLocal)...
+
+			@defaultlocal
+			@similiarLocales(@defaultlocal)...
+
+			'en'
+			@similiarLocales('en')...
+
+			@availablelocals...
+		]
+
+		locales.shift() unless @chosenLocal
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
