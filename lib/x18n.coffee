@@ -31,6 +31,15 @@ class X18n
 			ret[v] = v for v in arr
 			v for k, v of ret
 
+		getByDotNotation: (obj, key) ->
+			keys = key.split('.')
+
+			until keys.length is 0
+				obj = obj[keys[0]]
+				keys.shift()
+
+			obj
+
 	@register: (local, dict) ->
 		unless local of @dict
 			@dict[local] = {}
