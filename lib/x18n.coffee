@@ -86,19 +86,23 @@ class X18n
 			@availableLocales...
 		)
 
-		X18n.trigger('lang:change')
+		@trigger('lang:change')
 
 		@locales = @utils.unique(locales)
 
 	oldT = window.t
 
-	@t: (key, interpolation) ->
+	@t: (key, interpolation) =>
+
+		@utils.getByDotNotation(@dict, key)
 
 	@t.noConflict = ->
 		window.t = oldT
 		X18n.t
 
 	window.t = @t
+
+	@on 'dict:change', -> @sortLocales()
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
