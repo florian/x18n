@@ -57,23 +57,25 @@ class X18n
 			l.toLowerCase().indexOf(local) is 0
 
 	@sortLocales: ->
-		locales = [
-			@chosenLocal
-			@similiarLocales(@chosenLocal)...
+		locales = []
 
-			@detectLocal()
-			@similiarLocales(@detectLocal)...
+		locales.push(@chosenLocal) unless @chosenLocal
 
-			@defaultlocal
+		locales.push(
+			@similiarLocales(@chosenLocal)...,
+			@detectLocal(),
+			@similiarLocales(@detectLocal)...,
+
+			@defaultlocal,
 			@similiarLocales(@defaultlocal)...
+		)
 
-			'en'
-			@similiarLocales('en')...
+		locales.push('en') if 'en' of @availableLocales
 
+		locales.push(
+			@similiarLocales('en')...,
 			@availableLocales...
-		]
-
-		locales.shift() unless @chosenLocal
+		)
 
 		@locales = @utils.unique(locales)
 
