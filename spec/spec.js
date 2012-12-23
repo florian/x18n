@@ -58,11 +58,24 @@
           return expect(a).to.eql([2, 4, 6, 8]);
         });
       });
-      return describe('unique', function() {
+      describe('unique', function() {
         return it('should remove duplicate entries', function() {
           var a;
           a = utils.unique([1, 2, 1, 3, 1, 2]);
           return expect(a).to.eql([1, 2, 3]);
+        });
+      });
+      return describe('getByDotNotation', function() {
+        return it('should return the specified value', function() {
+          var v;
+          v = utils.getByDotNotation({
+            a: {
+              b: {
+                c: 1
+              }
+            }
+          }, 'a.b.c');
+          return expect(v).to.equal(1);
         });
       });
     });

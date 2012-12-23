@@ -32,6 +32,11 @@ describe 'X18n', ->
 				a = utils.unique([1, 2, 1, 3, 1, 2])
 				expect(a).to.eql([1, 2, 3])
 
+		describe 'getByDotNotation', ->
+			it 'should return the specified value', ->
+				v = utils.getByDotNotation({a: b: c: 1}, 'a.b.c')
+				expect(v).to.equal(1)
+
 	describe 'event system', ->
 		it 'should be available', ->
 			expect(X18n.__observable).to.be.an('object')
