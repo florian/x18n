@@ -1,4 +1,4 @@
-class X18n
+class X18n extends new Observable
 
 	@dict: {}
 	@prefetch: ['en']
@@ -23,7 +23,3 @@ else if exports?
 	module.exports = X18n
 else
 	window.X18n = X18n
-
-###
-Can I drop @?
-###
