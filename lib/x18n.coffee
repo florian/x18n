@@ -81,11 +81,13 @@ class X18n
 
 	oldT = window.t
 
-	window.t = @t = (key, interpolation) ->
+	@t: (key, interpolation) ->
 
 	@t.noConflict = ->
+		window.t = oldT
+		X18n.t
 
-	@t.plural = (key, n) ->
+	window.t = @t
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], -> X18n
