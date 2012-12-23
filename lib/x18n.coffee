@@ -1,9 +1,10 @@
 class X18n
 
 	@dict: {}
-	@prefetch: ['en']
+
 	@defaultlocal: 'en'
 	@chosenLocal: undefined
+
 	@availablelocals: []
 	@locals = []
 
@@ -23,7 +24,10 @@ class X18n
 			     one[k] = v
 
 	@register: (local, dict) ->
-		@dict[local] = {} unless local of @dict
+		unless local of @dict
+			@dict[local] = {}
+			@availablelocals.push(local)
+
 		@utils.merge(@dict[local], dict)
 
 		@trigger('dict:change')
