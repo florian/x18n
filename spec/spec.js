@@ -1,10 +1,15 @@
 (function() {
-  var utils;
+  var dict, utils;
 
   utils = X18n.utils;
 
+  dict = X18n.dict;
+
   describe('X18', function() {
-    return describe('utils', function() {
+    afterEach(function() {
+      return dict = X18n.dict = {};
+    });
+    describe('utils', function() {
       return describe('merge', function() {
         it('should be able to merge a single object', function() {
           var a, b;
@@ -39,6 +44,39 @@
             }
           });
         });
+      });
+    });
+    return describe('register', function() {
+      it("should create a lang key in the dict if it doesn't exist", function() {
+        X18n.register('en', {});
+        return expect(dict).to.have.property('en').that.is.an('object');
+      });
+      it('should fill the dict', function() {
+        X18n.register('en', {
+          user: 'user'
+        });
+        return expect(dict.en).to.have.property('user', 'user');
+      });
+      it('should not replace existing properties, but merge them', function() {
+        X18n.register('en', {
+          user: 'user'
+        });
+        X18n.register('en', {
+          login: 'login'
+        });
+        return expect(dict.en).to.eql({
+          user: 'user',
+          login: 'login'
+        });
+      });
+      return it('should trigger the event dict:change', function() {
+        var called;
+        called = false;
+        X18n.on('dict:change', function() {
+          return called = true;
+        });
+        X18n.register('en', {});
+        return expect(called).to.be["true"];
       });
     });
   });
