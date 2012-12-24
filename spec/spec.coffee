@@ -1,13 +1,13 @@
-utils = X18n.utils
-dict = X18n.dict
+utils = x18n.utils
+dict = x18n.dict
 
-describe 'X18n', ->
+describe 'x18n', ->
 	afterEach ->
-		dict = X18n.dict = {}
-		X18n.chosenLocal = undefined
-		X18n.defaultLocal = 'en'
-		X18n.availableLocales = []
-		X18n.sortLocales()
+		dict = x18n.dict = {}
+		x18n.chosenLocal = undefined
+		x18n.defaultLocal = 'en'
+		x18n.availableLocales = []
+		x18n.sortLocales()
 
 	describe 'utils', ->
 		describe 'merge', ->
@@ -45,56 +45,56 @@ describe 'X18n', ->
 
 	describe 'event system', ->
 		it 'should be available', ->
-			expect(X18n.__observable).to.be.an('object')
-			expect(X18n.on).to.be.a('function')
-			expect(X18n.once).to.be.a('function')
-			expect(X18n.off).to.be.a('function')
-			expect(X18n.trigger).to.be.a('function')
+			expect(x18n.__observable).to.be.an('object')
+			expect(x18n.on).to.be.a('function')
+			expect(x18n.once).to.be.a('function')
+			expect(x18n.off).to.be.a('function')
+			expect(x18n.trigger).to.be.a('function')
 
 	describe 'register', ->
 		it "should create a lang key in the dict if it doesn't exist", ->
-			X18n.register 'en', {}
+			x18n.register 'en', {}
 			expect(dict).to.have.property('en').that.is.an('object')
 
 		it 'should fill the dict', ->
-			X18n.register 'en', user: 'user'
+			x18n.register 'en', user: 'user'
 			expect(dict.en).to.have.property('user', 'user')
 
 		it 'should not replace existing properties, but merge them', ->
-			X18n.register 'en', user: 'user'
-			X18n.register 'en', login: 'login'
+			x18n.register 'en', user: 'user'
+			x18n.register 'en', login: 'login'
 			expect(dict.en).to.eql(user: 'user', login: 'login')
 
 		it 'should trigger the event dict:change', ->
 			called = false
-			X18n.on 'dict:change', -> called = true
-			X18n.register 'en', {}
+			x18n.on 'dict:change', -> called = true
+			x18n.register 'en', {}
 			expect(called).to.be.true
 
 	describe 'set', ->
 		it 'should set @chosenLocal', ->
-			X18n.set 'de'
-			expect(X18n.chosenLocal).to.equal('de')
+			x18n.set 'de'
+			expect(x18n.chosenLocal).to.equal('de')
 
 	describe 'setDefault', ->
 		it 'should set @defaultLocal', ->
-			X18n.setDefault 'en'
-			expect(X18n.defaultLocal).to.equal('en')
+			x18n.setDefault 'en'
+			expect(x18n.defaultLocal).to.equal('en')
 
 	describe 'similiarLocales', ->
 		it 'should detect similiar locales', ->
-			X18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr']
-			expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU'])
+			x18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr']
+			expect(x18n.similiarLocales('en')).to.eql(['en-us', 'en-AU'])
 
 	describe 'sortLocales', ->
 		it 'should set @locales to an array', ->
-			X18n.sortLocales()
-			expect(X18n.locales).to.be.an('array')
+			x18n.sortLocales()
+			expect(x18n.locales).to.be.an('array')
 
 		it 'should trigger lang:change', ->
 			called = false
-			X18n.on 'lang:change', -> called = true
-			X18n.sortLocales()
+			x18n.on 'lang:change', -> called = true
+			x18n.sortLocales()
 			expect(called).to.be.true
 
 		###
@@ -105,42 +105,42 @@ describe 'X18n', ->
 
 	describe 'interpolate', ->
 		it 'should support numeric interpolation', ->
-			s = X18n.interpolate('Hello %0', ['World'])
+			s = x18n.interpolate('Hello %0', ['World'])
 			expect(s).to.equal('Hello World')
 
 		it 'should support alpha interpolation', ->
-			s = X18n.interpolate('Hello %{s}', s: 'World')
+			s = x18n.interpolate('Hello %{s}', s: 'World')
 			expect(s).to.equal('Hello World')
 
 		it 'should support several interpolations in one string', ->
-			s = X18n.interpolate('Hello %0 and %1', ['a', 'b'])
+			s = x18n.interpolate('Hello %0 and %1', ['a', 'b'])
 			expect(s).to.equal('Hello a and b')
 
 	describe 't', ->
-		it 'should be defined in the global and X18n scope', ->
+		it 'should be defined in the global and x18n scope', ->
 			expect(window).to.have.property('t')
-			expect(X18n).to.have.property('t')
+			expect(x18n).to.have.property('t')
 
 		it 'should return the translation', ->
-			X18n.register 'de', user: 'benutzer'
+			x18n.register 'de', user: 'benutzer'
 			expect(t('user')).to.equal('benutzer')
 
 		it 'should loop through all available locales and return the first translation', ->
-			X18n.register 'de', {}
-			X18n.register 'en', user: 'user'
+			x18n.register 'de', {}
+			x18n.register 'en', user: 'user'
 			expect(t('user')).to.equal('user')
 
 		it 'should behave like utils.getByDotNotation', ->
-			X18n.register 'en', errors: presence: 'Not found'
+			x18n.register 'en', errors: presence: 'Not found'
 			expect(t('errors.presence')).to.equal('Not found')
 
 		it "should populate @missingTranslation if the translation doesn't exist in some language", ->
-			X18n.register 'en', {}
+			x18n.register 'en', {}
 			t('register')
-			expect(X18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register')
+			expect(x18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register')
 
 		it 'should support interpolation', ->
-			X18n.register 'en',
+			x18n.register 'en',
 				a: 'Hello %0',
 				b: 'Hello %{s}'
 
@@ -151,5 +151,5 @@ describe 'X18n', ->
 		describe 'noConflict', ->
 			it 'should restore the old t and return t', ->
 				t = window.t.noConflict()
-				expect(t).to.equal(X18n.t)
+				expect(t).to.equal(x18n.t)
 				window.t = t

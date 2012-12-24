@@ -1,4 +1,4 @@
-class X18n
+class x18n
 
 	@dict: {}
 
@@ -118,21 +118,26 @@ class X18n
 		if typeof tr is 'string'
 			tr = @interpolate(tr, interpolation)
 		else if tr isnt undefined
-			tr.plural
+			tr.plural = (n) ->
+				n = String(n)
+				if n of tr
+					tr[n]
+				else
+					x18n.interpolate(tr.n, n: n)
 
 		tr
 
 	@t.noConflict = ->
 		window.t = oldT
-		X18n.t
+		x18n.t
 
 	window.t = @t
 
-	@on 'dict:change', -> X18n.sortLocales()
+	@on 'dict:change', -> x18n.sortLocales()
 
 if typeof define is 'function' and define.amd
-	define 'x18n', ['observable'], -> X18n
+	define 'x18n', ['observable'], -> x18n
 else if exports?
-	module.exports = X18n
+	module.exports = x18n
 else
-	window.X18n = X18n
+	window.x18n = x18n

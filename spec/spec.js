@@ -1,17 +1,17 @@
 (function() {
   var dict, utils;
 
-  utils = X18n.utils;
+  utils = x18n.utils;
 
-  dict = X18n.dict;
+  dict = x18n.dict;
 
-  describe('X18n', function() {
+  describe('x18n', function() {
     afterEach(function() {
-      dict = X18n.dict = {};
-      X18n.chosenLocal = void 0;
-      X18n.defaultLocal = 'en';
-      X18n.availableLocales = [];
-      return X18n.sortLocales();
+      dict = x18n.dict = {};
+      x18n.chosenLocal = void 0;
+      x18n.defaultLocal = 'en';
+      x18n.availableLocales = [];
+      return x18n.sortLocales();
     });
     describe('utils', function() {
       describe('merge', function() {
@@ -91,29 +91,29 @@
     });
     describe('event system', function() {
       return it('should be available', function() {
-        expect(X18n.__observable).to.be.an('object');
-        expect(X18n.on).to.be.a('function');
-        expect(X18n.once).to.be.a('function');
-        expect(X18n.off).to.be.a('function');
-        return expect(X18n.trigger).to.be.a('function');
+        expect(x18n.__observable).to.be.an('object');
+        expect(x18n.on).to.be.a('function');
+        expect(x18n.once).to.be.a('function');
+        expect(x18n.off).to.be.a('function');
+        return expect(x18n.trigger).to.be.a('function');
       });
     });
     describe('register', function() {
       it("should create a lang key in the dict if it doesn't exist", function() {
-        X18n.register('en', {});
+        x18n.register('en', {});
         return expect(dict).to.have.property('en').that.is.an('object');
       });
       it('should fill the dict', function() {
-        X18n.register('en', {
+        x18n.register('en', {
           user: 'user'
         });
         return expect(dict.en).to.have.property('user', 'user');
       });
       it('should not replace existing properties, but merge them', function() {
-        X18n.register('en', {
+        x18n.register('en', {
           user: 'user'
         });
-        X18n.register('en', {
+        x18n.register('en', {
           login: 'login'
         });
         return expect(dict.en).to.eql({
@@ -124,43 +124,43 @@
       return it('should trigger the event dict:change', function() {
         var called;
         called = false;
-        X18n.on('dict:change', function() {
+        x18n.on('dict:change', function() {
           return called = true;
         });
-        X18n.register('en', {});
+        x18n.register('en', {});
         return expect(called).to.be["true"];
       });
     });
     describe('set', function() {
       return it('should set @chosenLocal', function() {
-        X18n.set('de');
-        return expect(X18n.chosenLocal).to.equal('de');
+        x18n.set('de');
+        return expect(x18n.chosenLocal).to.equal('de');
       });
     });
     describe('setDefault', function() {
       return it('should set @defaultLocal', function() {
-        X18n.setDefault('en');
-        return expect(X18n.defaultLocal).to.equal('en');
+        x18n.setDefault('en');
+        return expect(x18n.defaultLocal).to.equal('en');
       });
     });
     describe('similiarLocales', function() {
       return it('should detect similiar locales', function() {
-        X18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr'];
-        return expect(X18n.similiarLocales('en')).to.eql(['en-us', 'en-AU']);
+        x18n.availableLocales = ['en', 'en-us', 'en-AU', 'de', 'fr'];
+        return expect(x18n.similiarLocales('en')).to.eql(['en-us', 'en-AU']);
       });
     });
     describe('sortLocales', function() {
       it('should set @locales to an array', function() {
-        X18n.sortLocales();
-        return expect(X18n.locales).to.be.an('array');
+        x18n.sortLocales();
+        return expect(x18n.locales).to.be.an('array');
       });
       return it('should trigger lang:change', function() {
         var called;
         called = false;
-        X18n.on('lang:change', function() {
+        x18n.on('lang:change', function() {
           return called = true;
         });
-        X18n.sortLocales();
+        x18n.sortLocales();
         return expect(called).to.be["true"];
       });
       /*
@@ -173,42 +173,42 @@
     describe('interpolate', function() {
       it('should support numeric interpolation', function() {
         var s;
-        s = X18n.interpolate('Hello %0', ['World']);
+        s = x18n.interpolate('Hello %0', ['World']);
         return expect(s).to.equal('Hello World');
       });
       it('should support alpha interpolation', function() {
         var s;
-        s = X18n.interpolate('Hello %{s}', {
+        s = x18n.interpolate('Hello %{s}', {
           s: 'World'
         });
         return expect(s).to.equal('Hello World');
       });
       return it('should support several interpolations in one string', function() {
         var s;
-        s = X18n.interpolate('Hello %0 and %1', ['a', 'b']);
+        s = x18n.interpolate('Hello %0 and %1', ['a', 'b']);
         return expect(s).to.equal('Hello a and b');
       });
     });
     return describe('t', function() {
-      it('should be defined in the global and X18n scope', function() {
+      it('should be defined in the global and x18n scope', function() {
         expect(window).to.have.property('t');
-        return expect(X18n).to.have.property('t');
+        return expect(x18n).to.have.property('t');
       });
       it('should return the translation', function() {
-        X18n.register('de', {
+        x18n.register('de', {
           user: 'benutzer'
         });
         return expect(t('user')).to.equal('benutzer');
       });
       it('should loop through all available locales and return the first translation', function() {
-        X18n.register('de', {});
-        X18n.register('en', {
+        x18n.register('de', {});
+        x18n.register('en', {
           user: 'user'
         });
         return expect(t('user')).to.equal('user');
       });
       it('should behave like utils.getByDotNotation', function() {
-        X18n.register('en', {
+        x18n.register('en', {
           errors: {
             presence: 'Not found'
           }
@@ -216,12 +216,12 @@
         return expect(t('errors.presence')).to.equal('Not found');
       });
       it("should populate @missingTranslation if the translation doesn't exist in some language", function() {
-        X18n.register('en', {});
+        x18n.register('en', {});
         t('register');
-        return expect(X18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register');
+        return expect(x18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register');
       });
       it('should support interpolation', function() {
-        X18n.register('en', {
+        x18n.register('en', {
           a: 'Hello %0',
           b: 'Hello %{s}'
         });
@@ -234,7 +234,7 @@
         return it('should restore the old t and return t', function() {
           var t;
           t = window.t.noConflict();
-          expect(t).to.equal(X18n.t);
+          expect(t).to.equal(x18n.t);
           return window.t = t;
         });
       });
