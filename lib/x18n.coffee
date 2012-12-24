@@ -42,6 +42,9 @@ class X18n
 
 			obj
 
+		isArray: (value) ->
+			Object::toString.call(value) is '[object Array]'
+
 	@register: (local, dict) ->
 		unless local of @dict
 			@dict[local] = {}
@@ -90,6 +93,13 @@ class X18n
 
 		@locales = @utils.unique(locales)
 
+	@interpolate: (str, interpolation) ->
+		if @utils.isArray(str)
+			true
+		else
+			false
+		str
+
 	oldT = window.t
 
 	@t: (key, interpolation) =>
@@ -102,6 +112,11 @@ class X18n
 				@missingTranslations[local] = [] unless local of @missingTranslations
 				@missingTranslations[local].push(key)
 				@missingTranslations[local] = @utils.unique(@missingTranslations[local])
+
+		if typeof tr is 'string'
+			tr = @interpolate(tr, interpolation)
+		else if tr isnt undefined
+			tr.plural
 
 		tr
 
