@@ -94,10 +94,12 @@ class X18n
 		@locales = @utils.unique(locales)
 
 	@interpolate: (str, interpolation) ->
-		if @utils.isArray(str)
-			true
+		if @utils.isArray(interpolation)
+			str = str.replace /%(\d+)/g, (_, n) ->
+				interpolation[Number(n)]
 		else
-			false
+			str = str.replace /%\{([^}]+)\}/g, (_, key) ->
+				interpolation[key]
 		str
 
 	oldT = window.t
