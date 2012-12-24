@@ -96,7 +96,7 @@ class x18n
 	@interpolate: (str, interpolation) ->
 		if @utils.isArray(interpolation)
 			str = str.replace /%(\d+)/g, (_, n) ->
-				interpolation[Number(n)]
+				interpolation[Number(n) - 1]
 		else
 			str = str.replace /%\{([^}]+)\}/g, (_, key) ->
 				interpolation[key]
@@ -123,7 +123,7 @@ class x18n
 				if n of tr
 					tr[n]
 				else
-					x18n.interpolate(tr.n, n: n)
+					x18n.interpolate(tr.n, [n])
 
 		tr
 
