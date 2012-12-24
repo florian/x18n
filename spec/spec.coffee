@@ -103,6 +103,19 @@ describe 'X18n', ->
 		it should not contain duplicate entries
 		###
 
+	describe 'interpolate', ->
+		it 'should support numeric interpolation', ->
+			s = X18n.interpolate('Hello %0', ['World'])
+			expect(s).to.equal('Hello World')
+
+		it 'should support alpha interpolation', ->
+			s = X18n.interpolate('Hello %{s}', s: 'World')
+			expect(s).to.equal('Hello World')
+
+		it 'should support several interpolations in one string', ->
+			s = X18n.interpolate('Hello %0 and %1', ['a', 'b'])
+			expect(s).to.equal('Hello a and b')
+
 	describe 't', ->
 		it 'should be defined in the global and X18n scope', ->
 			expect(window).to.have.property('t')
@@ -125,6 +138,15 @@ describe 'X18n', ->
 			X18n.register 'en', {}
 			t('register')
 			expect(X18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register')
+
+		it 'should support interpolation', ->
+			X18n.register 'en',
+				a: 'Hello %0',
+				b: 'Hello %{s}'
+
+			expect(t('a', ['World'])).to.equal('Hello World')
+			expect(t('b', s: 'World')).to.equal('Hello World')
+
 
 		describe 'noConflict', ->
 			it 'should restore the old t and return t', ->

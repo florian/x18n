@@ -170,6 +170,25 @@
       */
 
     });
+    describe('interpolate', function() {
+      it('should support numeric interpolation', function() {
+        var s;
+        s = X18n.interpolate('Hello %0', ['World']);
+        return expect(s).to.equal('Hello World');
+      });
+      it('should support alpha interpolation', function() {
+        var s;
+        s = X18n.interpolate('Hello %{s}', {
+          s: 'World'
+        });
+        return expect(s).to.equal('Hello World');
+      });
+      return it('should support several interpolations in one string', function() {
+        var s;
+        s = X18n.interpolate('Hello %0 and %1', ['a', 'b']);
+        return expect(s).to.equal('Hello a and b');
+      });
+    });
     return describe('t', function() {
       it('should be defined in the global and X18n scope', function() {
         expect(window).to.have.property('t');
@@ -200,6 +219,16 @@
         X18n.register('en', {});
         t('register');
         return expect(X18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register');
+      });
+      it('should support interpolation', function() {
+        X18n.register('en', {
+          a: 'Hello %0',
+          b: 'Hello %{s}'
+        });
+        expect(t('a', ['World'])).to.equal('Hello World');
+        return expect(t('b', {
+          s: 'World'
+        })).to.equal('Hello World');
       });
       return describe('noConflict', function() {
         return it('should restore the old t and return t', function() {
