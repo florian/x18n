@@ -105,7 +105,7 @@ describe 'x18n', ->
 
 	describe 'interpolate', ->
 		it 'should support numeric interpolation', ->
-			s = x18n.interpolate('Hello %1', ['World'])
+			s = x18n.interpolate('Hello %1', 'World')
 			expect(s).to.equal('Hello World')
 
 		it 'should support alpha interpolation', ->
@@ -113,7 +113,7 @@ describe 'x18n', ->
 			expect(s).to.equal('Hello World')
 
 		it 'should support several interpolations in one string', ->
-			s = x18n.interpolate('Hello %1 and %2', ['a', 'b'])
+			s = x18n.interpolate('Hello %1 and %2', 'a', 'b')
 			expect(s).to.equal('Hello a and b')
 
 	describe 't', ->
@@ -151,7 +151,7 @@ describe 'x18n', ->
 				a: 'Hello %1',
 				b: 'Hello %{s}'
 
-			expect(t('a', ['World'])).to.equal('Hello World')
+			expect(t('a', 'World')).to.equal('Hello World')
 			expect(t('b', s: 'World')).to.equal('Hello World')
 
 

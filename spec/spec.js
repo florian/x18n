@@ -173,7 +173,7 @@
     describe('interpolate', function() {
       it('should support numeric interpolation', function() {
         var s;
-        s = x18n.interpolate('Hello %1', ['World']);
+        s = x18n.interpolate('Hello %1', 'World');
         return expect(s).to.equal('Hello World');
       });
       it('should support alpha interpolation', function() {
@@ -185,7 +185,7 @@
       });
       return it('should support several interpolations in one string', function() {
         var s;
-        s = x18n.interpolate('Hello %1 and %2', ['a', 'b']);
+        s = x18n.interpolate('Hello %1 and %2', 'a', 'b');
         return expect(s).to.equal('Hello a and b');
       });
     });
@@ -235,7 +235,7 @@
           a: 'Hello %1',
           b: 'Hello %{s}'
         });
-        expect(t('a', ['World'])).to.equal('Hello World');
+        expect(t('a', 'World')).to.equal('Hello World');
         return expect(t('b', {
           s: 'World'
         })).to.equal('Hello World');
