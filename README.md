@@ -6,7 +6,7 @@ X18n is a JavaScript library that helps you to translate web apps that do a lot 
 
 ## Overview
 
-*(Rougly adopted from r18n to show the compability.)*
+*The translations are rougly adopted from r18n to show the compability.*
 
 ```js
 x18n.register('en', {
