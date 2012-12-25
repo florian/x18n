@@ -87,9 +87,9 @@ class x18n
 
 		locales.push(@availableLocales...)
 
-		@trigger('lang:change')
-
 		@locales = @utils.unique(locales)
+
+		@trigger('lang:change')
 
 	@interpolate: (str, interpolation...) ->
 		if @utils.isPlainObject(interpolation[0])
