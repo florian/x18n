@@ -82,10 +82,8 @@ class x18n
 			@similiarLocales('en')...,
 		]
 
-		_locales.shift() unless @chosenLocal
-
 		locales = []
-		locales.push(local) for local in locales when local in @availableLocales
+		locales.push(local) for local in _locales when local in @availableLocales
 
 		locales.push(@availableLocales...)
 
