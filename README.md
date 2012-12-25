@@ -39,9 +39,7 @@ t('user.count').plural(2); // 'There are 2 users online.'
 
 ## Getting started
 
-Wiki entries:
-
-- [Getting started](https://github.com/js-coder/x18n/wiki/Getting-started)
-- [Writing an adapter](https://github.com/js-coder/x18n/wiki/Writing-an-adapter)
+- Wiki entry: [Getting started](https://github.com/js-coder/x18n/wiki/Getting-started)
+- [The jQuery adapter](https://github.com/js-coder/x18n/wiki/Writing-an-adapter)
 
 I'm currently writing a jQuery adapter for x18n that will automatically update the UI when the dictionary or the language changes.
