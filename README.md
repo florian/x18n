@@ -12,7 +12,8 @@ X18n is a JavaScript library that helps you to translate web apps that do a lot 
 x18n.register('en', {
   user: {
     welcome: 'Welcome %1',
-    logout: 'Logout'
+    messages: 'You have %{n} messages.',
+    logout: 'Logout',
     count: {
       1: 'There is 1 user online.',
       n: 'There are %1 users online.'
@@ -21,7 +22,8 @@ x18n.register('en', {
 });
 
 t('user.logout'); // 'Logout'
-t('user.welcome', ['John']); // 'Welcome John'
+t('user.welcome', 'John'); // 'Welcome John'
+t('user.messages', {n: 12}); // 'You have 12 messages.'
 
 t('user.count').plural(1); // 'There is 1 user online.'
 t('user.count').plural(2); // 'There are 2 users online.'
