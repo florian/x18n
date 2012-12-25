@@ -114,6 +114,7 @@ class x18n
 				@missingTranslations[local] = [] unless local of @missingTranslations
 				@missingTranslations[local].push(key)
 				@missingTranslations[local] = @utils.unique(@missingTranslations[local])
+				@trigger('missing-translation', [local, key])
 
 		if typeof tr is 'string'
 			tr = @interpolate(tr, interpolation)
