@@ -42,8 +42,8 @@ class x18n
 
 			obj
 
-		isArray: (value) ->
-			Object::toString.call(value) is '[object Array]'
+		isPlainObject: (value) ->
+			!!value && Object::toString.call(value) is '[object Object]'
 
 	@register: (local, dict) ->
 		unless local of @dict
@@ -93,13 +93,13 @@ class x18n
 
 		@locales = @utils.unique(locales)
 
-	@interpolate: (str, interpolation) ->
-		if @utils.isArray(interpolation)
+	@interpolate: (str, interpolation...) ->
+		if @utils.isPlainObject(interpolation[0])
+			str = str.replace /%\{([^}]+)\}/g, (_, key) ->
+				interpolation[0][key]
+		else
 			str = str.replace /%(\d+)/g, (_, n) ->
 				interpolation[Number(n) - 1]
-		else
-			str = str.replace /%\{([^}]+)\}/g, (_, key) ->
-				interpolation[key]
 		str
 
 	oldT = window.t
