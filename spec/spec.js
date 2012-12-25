@@ -220,6 +220,16 @@
         t('register');
         return expect(x18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register');
       });
+      it("should trigger the event missing-translation if the translation doesn't exist in some language", function() {
+        var called;
+        called = false;
+        x18n.on('missing-translation', function() {
+          return called = true;
+        });
+        x18n.register('en', {});
+        t('register');
+        return expect(called).to.be["true"];
+      });
       it('should support interpolation', function() {
         x18n.register('en', {
           a: 'Hello %1',

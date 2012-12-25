@@ -139,6 +139,13 @@ describe 'x18n', ->
 			t('register')
 			expect(x18n.missingTranslations).to.have.property('en').that.is.an('array').that.include('register')
 
+		it "should trigger the event missing-translation if the translation doesn't exist in some language", ->
+			called = false
+			x18n.on 'missing-translation', -> called = true
+			x18n.register 'en', {}
+			t('register')
+			expect(called).to.be.true
+
 		it 'should support interpolation', ->
 			x18n.register 'en',
 				a: 'Hello %1',
