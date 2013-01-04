@@ -25,6 +25,10 @@ t('user.browser', {browser: 'Chromium'}); // 'You are using Chromium.'
 
 t('user.count').plural(1); // 'There is 1 user online.'
 t('user.count').plural(2); // 'There are 2 users online.'
+
+x18n.on(['lang:change', 'dict:change'], function () {
+  // Update the UI
+});
 ```
 
 ## Features
