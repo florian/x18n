@@ -116,6 +116,19 @@ describe 'x18n', ->
 			s = x18n.interpolate('Hello %1 and %2', 'a', 'b')
 			expect(s).to.equal('Hello a and b')
 
+	describe 'resolveBindings', ->
+		it 'should return the string if dynamic bindings are disabled', ->
+			x18n.dynamicBindings = false
+			str = '2 + 2 = ${2 + 2}'
+			expect(x18n.resolveBindings(str)).to.equal(str)
+			x18n.dynamicBindings = true # clean up
+
+		it 'should evaluate dynamic bindings', ->
+			expect(x18n.resolveBindings('2 + 2 = ${2 + 2}')).to.equal('2 + 2 = 4')
+
+			window.user = name: 'John'
+			expect(x18n.resolveBindings('Hello ${user.name}')).to.equal('Hello John')
+
 	describe 't', ->
 		it 'should be defined in the global and x18n scope', ->
 			expect(window).to.have.property('t')
@@ -154,6 +167,33 @@ describe 'x18n', ->
 			expect(t('a', 'World')).to.equal('Hello World')
 			expect(t('b', s: 'World')).to.equal('Hello World')
 
+		it 'should support dynamic bindings', ->
+			window.user = name: 'John'
+			x18n.register 'en',
+				welcome: 'Welcome ${user.name}'
+
+			expect(t('welcome')).to.equal('Welcome John')
+
+		it 'should support dynamic bindings for interpolation', ->
+			window.user = name: 'John'
+			x18n.register 'en',
+				welcome: 'Welcome %1'
+
+			expect(t('welcome', '${user.name}')).to.equal('Welcome John')
+
+			x18n.register 'en',
+				welcome: 'Welcome %{name}'
+
+			expect(t('welcome', name: '${user.name}')).to.equal('Welcome John')
+
+		it 'should support dynamic bindings for plurals', ->
+			window.users = length: 50
+			x18n.register 'en',
+				users:
+					1: 'There is 1 user online'
+					n: 'There are %1 users online'
+
+			expect(t('users').plural('${users.length}')).to.equal('There are 50 users online')
 
 		describe 'noConflict', ->
 			it 'should restore the old t and return t', ->
