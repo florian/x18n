@@ -32,12 +32,14 @@ t('user.count').plural(2); // 'There are 2 users online.'
 - [r18n](https://github.com/ai/r18n) compatible interpolation and pluralisation: All you need to do to use your r18n local dictionaries in x18n is to convert them from YAML to JSON and to register the objects.
 - Auto detects the user language.
 - Easy interpolation and pluralisation.
+- Support for [dynamic data bindings](https://github.com/js-coder/x18n/wiki/Dynamic-data-bindings)
 - An event system that enables you to easily re-render the UI when new translations are added or the language changes.
 - If a translation is missing x18n will choose a translation from a similiar locale, saves missing translations in an accessible object and fires an event.
 
 ## Wiki entries
 
 - **[Getting started](https://github.com/js-coder/x18n/wiki/Getting-started)**
+- [Dynamic data bindings](https://github.com/js-coder/x18n/wiki/Dynamic-data-bindings)
 - [Dealing with missing translations](https://github.com/js-coder/x18n/wiki/Dealing-with-missing-translations)
 - [Using a library that defines `window.t` together with x18n](https://github.com/js-coder/x18n/wiki/t.noConflict)
 
