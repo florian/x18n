@@ -265,6 +265,25 @@
         });
         return expect(t('welcome')).to.equal('Welcome John');
       });
+      it('should return an object with a plural method when requesting a plural', function() {
+        x18n.register('en', {
+          users: {
+            1: 'There is 1 user online',
+            n: 'There are %1 users online'
+          }
+        });
+        return expect(t('users')).to.have.property('plural').that.is.a('function');
+      });
+      it('should support pluralisation', function() {
+        x18n.register('en', {
+          users: {
+            1: 'There is 1 user online',
+            n: 'There are %1 users online'
+          }
+        });
+        expect(t('users').plural(1)).to.equal('There is 1 user online');
+        return expect(t('users').plural(3)).to.equal('There are 3 users online');
+      });
       it('should support dynamic bindings for interpolation', function() {
         window.user = {
           name: 'John'

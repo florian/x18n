@@ -174,6 +174,23 @@ describe 'x18n', ->
 
 			expect(t('welcome')).to.equal('Welcome John')
 
+		it 'should return an object with a plural method when requesting a plural', ->
+			x18n.register 'en',
+				users:
+					1: 'There is 1 user online'
+					n: 'There are %1 users online'
+
+			expect(t('users')).to.have.property('plural').that.is.a('function')
+
+		it 'should support pluralisation', ->
+			x18n.register 'en',
+				users:
+					1: 'There is 1 user online'
+					n: 'There are %1 users online'
+
+			expect(t('users').plural(1)).to.equal('There is 1 user online')
+			expect(t('users').plural(3)).to.equal('There are 3 users online')
+
 		it 'should support dynamic bindings for interpolation', ->
 			window.user = name: 'John'
 			x18n.register 'en',
