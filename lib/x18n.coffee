@@ -8,6 +8,8 @@ class x18n
 	@availableLocales: []
 	@locales: []
 
+	@dynamicBindings: true
+
 	@missingTranslations: {}
 
 	eventSystem = new Observable
@@ -91,6 +93,12 @@ class x18n
 
 		@trigger('lang:change')
 
+	@resolveBindings: (str) ->
+		str = String(str)
+		return str unless @dynamicBindings
+		str.replace /\$\{([^}]+)\}/g, (_, src) ->
+			x18n.globalEval src
+
 	@interpolate: (str, interpolation...) ->
 		if @utils.isPlainObject(interpolation[0])
 			str = str.replace /%\{([^}]+)\}/g, (_, key) ->
@@ -98,7 +106,12 @@ class x18n
 		else
 			str = str.replace /%(\d+)/g, (_, n) ->
 				interpolation[Number(n) - 1]
-		str
+		@resolveBindings(str)
+
+	@globalEval: (src) ->
+		(window.execScript || (src) ->
+			eval.call(window, src)
+		)(src)
 
 	oldT = window.t
 
@@ -115,10 +128,10 @@ class x18n
 				@trigger('missing-translation', [local, key])
 
 		if typeof tr is 'string'
-			tr = @interpolate(tr, interpolation)
+			tr = @interpolate(@resolveBindings(tr), interpolation)
 		else if tr isnt undefined
 			tr.plural = (n) ->
-				n = String(n)
+				n = x18n.resolveBindings(n)
 				if n of tr
 					tr[n]
 				else
