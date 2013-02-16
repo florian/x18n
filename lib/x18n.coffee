@@ -116,7 +116,7 @@ base = (Observable) ->
 
 		oldT = window.t
 
-		@t: (key, interpolation) =>
+		@t: (key, interpolation...) =>
 			tr = undefined
 			for local in @locales
 				tr = @utils.getByDotNotation(@dict[local], key)
@@ -129,14 +129,14 @@ base = (Observable) ->
 					@trigger('missing-translation', [local, key])
 
 			if typeof tr is 'string'
-				tr = @interpolate(@resolveBindings(tr), interpolation)
+				tr = @interpolate(@resolveBindings(tr), interpolation...)
 			else if tr isnt undefined
 				tr.plural = (n) ->
 					n = x18n.resolveBindings(n)
 					if n of tr
 						tr[n]
 					else
-						x18n.interpolate(tr.n, [n])
+						x18n.interpolate(tr.n, n)
 
 			tr
 
