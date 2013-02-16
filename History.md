@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 / 2013-02-16
+
+Fix multiple implicit interpolations.
+
 ## 1.0.1 / 2013-01-25
 
 Fix AMD. Remove CommonJS for now.
