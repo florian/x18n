@@ -248,11 +248,21 @@
       });
       it('should support interpolation', function() {
         x18n.register('en', {
-          a: 'Hello %1',
-          b: 'Hello %{s}'
+          a: 'Hello %1'
         });
-        expect(t('a', 'World')).to.equal('Hello World');
-        return expect(t('b', {
+        return expect(t('a', 'World')).to.equal('Hello World');
+      });
+      it('should support multiple interpolations', function() {
+        x18n.register('en', {
+          greeting: 'Hi %1 and %2'
+        });
+        return expect(t('greeting', 'a', 'b')).to.equal('Hi a and b');
+      });
+      it('should support explicit interpolation', function() {
+        x18n.register('en', {
+          a: 'Hello %{s}'
+        });
+        return expect(t('a', {
           s: 'World'
         })).to.equal('Hello World');
       });

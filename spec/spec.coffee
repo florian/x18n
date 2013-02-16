@@ -162,10 +162,20 @@ describe 'x18n', ->
 		it 'should support interpolation', ->
 			x18n.register 'en',
 				a: 'Hello %1',
-				b: 'Hello %{s}'
 
 			expect(t('a', 'World')).to.equal('Hello World')
-			expect(t('b', s: 'World')).to.equal('Hello World')
+
+		it 'should support multiple interpolations', ->
+			x18n.register 'en',
+				greeting: 'Hi %1 and %2'
+
+			expect(t('greeting', 'a', 'b')).to.equal('Hi a and b')
+
+		it 'should support explicit interpolation', ->
+			x18n.register 'en',
+				a: 'Hello %{s}'
+
+			expect(t('a', s: 'World')).to.equal('Hello World')
 
 		it 'should support dynamic bindings', ->
 			window.user = name: 'John'
