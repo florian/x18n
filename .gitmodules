@@ -1,3 +1,3 @@
 [submodule "lib/observable"]
 	path = lib/observable
-	url = git://github.com/js-coder/Observable.git
+	url = git://github.com/js-coder/observable.git
