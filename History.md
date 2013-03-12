@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.3 / 2013-03-12
+
+Upgrade to observable v1.2.1 which fixes a bug in IE.
+
 ## 1.0.2 / 2013-02-16
 
 Fix multiple implicit interpolations.
