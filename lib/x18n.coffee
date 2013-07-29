@@ -1,3 +1,5 @@
+isNode = typeof module isnt 'undefined' and module.exports
+
 base = (Observable) ->
 	class x18n
 
@@ -65,7 +67,9 @@ base = (Observable) ->
 			@defaultLocal = local
 			@sortLocales()
 
-		@detectLocal: -> navigator.userLanguage || navigator.language
+		@detectLocal: ->
+				return 'en' if isNode
+				navigator.userLanguage || navigator.language
 
 		@similiarLocales: (local) ->
 			local = String(local).slice(0, 2).toLowerCase()
@@ -114,7 +118,7 @@ base = (Observable) ->
 				eval.call(window, src)
 			)(src)
 
-		oldT = window.t
+		oldT = window.t if not isNode
 
 		@t: (key, interpolation...) =>
 			tr = undefined
@@ -144,11 +148,13 @@ base = (Observable) ->
 			window.t = oldT
 			x18n.t
 
-		window.t = @t
+		window.t = @t if not isNode
 
 		@on 'dict:change', -> x18n.sortLocales()
 
 if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], (Observable) -> base(Observable)
+else if isNode
+	module.exports = base(module.exports)
 else
 	window.x18n = base(Observable)

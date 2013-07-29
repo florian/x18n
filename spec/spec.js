@@ -1,9 +1,21 @@
 (function() {
-  var dict, utils;
+  var dict, expect, isNode, t, utils, x18n;
+
+  if (typeof module !== 'undefined') {
+    x18n = require('../lib/x18n.js');
+    t = x18n.t;
+    expect = require('./vendor/chai.js').expect;
+  } else {
+    x18n = window.x18n;
+    t = x18n.t;
+    expect = window.expect;
+  }
 
   utils = x18n.utils;
 
   dict = x18n.dict;
+
+  isNode = typeof window === 'undefined';
 
   describe('x18n', function() {
     afterEach(function() {
@@ -197,19 +209,23 @@
         expect(x18n.resolveBindings(str)).to.equal(str);
         return x18n.dynamicBindings = true;
       });
-      return it('should evaluate dynamic bindings', function() {
-        expect(x18n.resolveBindings('2 + 2 = ${2 + 2}')).to.equal('2 + 2 = 4');
-        window.user = {
-          name: 'John'
-        };
-        return expect(x18n.resolveBindings('Hello ${user.name}')).to.equal('Hello John');
-      });
+      if (!isNode) {
+        return it('should evaluate dynamic bindings', function() {
+          expect(x18n.resolveBindings('2 + 2 = ${2 + 2}')).to.equal('2 + 2 = 4');
+          window.user = {
+            name: 'John'
+          };
+          return expect(x18n.resolveBindings('Hello ${user.name}')).to.equal('Hello John');
+        });
+      }
     });
     return describe('t', function() {
-      it('should be defined in the global and x18n scope', function() {
-        expect(window).to.have.property('t');
-        return expect(x18n).to.have.property('t');
-      });
+      if (!isNode) {
+        it('should be defined in the global and x18n scope', function() {
+          expect(window).to.have.property('t');
+          return expect(x18n).to.have.property('t');
+        });
+      }
       it('should return the translation', function() {
         x18n.register('de', {
           user: 'benutzer'
@@ -266,15 +282,17 @@
           s: 'World'
         })).to.equal('Hello World');
       });
-      it('should support dynamic bindings', function() {
-        window.user = {
-          name: 'John'
-        };
-        x18n.register('en', {
-          welcome: 'Welcome ${user.name}'
+      if (!isNode) {
+        it('should support dynamic bindings', function() {
+          window.user = {
+            name: 'John'
+          };
+          x18n.register('en', {
+            welcome: 'Welcome ${user.name}'
+          });
+          return expect(t('welcome')).to.equal('Welcome John');
         });
-        return expect(t('welcome')).to.equal('Welcome John');
-      });
+      }
       it('should return an object with a plural method when requesting a plural', function() {
         x18n.register('en', {
           users: {
@@ -294,41 +312,46 @@
         expect(t('users').plural(1)).to.equal('There is 1 user online');
         return expect(t('users').plural(3)).to.equal('There are 3 users online');
       });
-      it('should support dynamic bindings for interpolation', function() {
-        window.user = {
-          name: 'John'
-        };
-        x18n.register('en', {
-          welcome: 'Welcome %1'
+      if (!isNode) {
+        it('should support dynamic bindings for interpolation', function() {
+          window.user = {
+            name: 'John'
+          };
+          x18n.register('en', {
+            welcome: 'Welcome %1'
+          });
+          expect(t('welcome', '${user.name}')).to.equal('Welcome John');
+          x18n.register('en', {
+            welcome: 'Welcome %{name}'
+          });
+          return expect(t('welcome', {
+            name: '${user.name}'
+          })).to.equal('Welcome John');
         });
-        expect(t('welcome', '${user.name}')).to.equal('Welcome John');
-        x18n.register('en', {
-          welcome: 'Welcome %{name}'
+      }
+      if (!isNode) {
+        it('should support dynamic bindings for plurals', function() {
+          window.users = {
+            length: 50
+          };
+          x18n.register('en', {
+            users: {
+              1: 'There is 1 user online',
+              n: 'There are %1 users online'
+            }
+          });
+          return expect(t('users').plural('${users.length}')).to.equal('There are 50 users online');
         });
-        return expect(t('welcome', {
-          name: '${user.name}'
-        })).to.equal('Welcome John');
-      });
-      it('should support dynamic bindings for plurals', function() {
-        window.users = {
-          length: 50
-        };
-        x18n.register('en', {
-          users: {
-            1: 'There is 1 user online',
-            n: 'There are %1 users online'
-          }
+      }
+      if (!isNode) {
+        return describe('noConflict', function() {
+          return it('should restore the old t and return t', function() {
+            t = window.t.noConflict();
+            expect(t).to.equal(x18n.t);
+            return window.t = t;
+          });
         });
-        return expect(t('users').plural('${users.length}')).to.equal('There are 50 users online');
-      });
-      return describe('noConflict', function() {
-        return it('should restore the old t and return t', function() {
-          var t;
-          t = window.t.noConflict();
-          expect(t).to.equal(x18n.t);
-          return window.t = t;
-        });
-      });
+      }
     });
   });
 
