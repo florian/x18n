@@ -1,0 +1,16 @@
+{
+  "name": "x18n",
+  "version": "1.0.3",
+  "homepage": "https://github.com/js-coder/x18n",
+  "main": "lib/x18n.js",
+  "ignore": [
+    "**/.*",
+    "**/*.coffee",
+    "grunt.js",
+    "History.md",
+    "node_modules",
+    "bower_components",
+    "spec",
+    "testem.yml"
+  ]
+}
