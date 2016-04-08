@@ -110,11 +110,11 @@ base = (Observable) ->
 			@resolveBindings(str)
 
 		@globalEval: (src) ->
-			(window.execScript || (src) ->
-				eval.call(window, src)
+			(window?.execScript || (src) ->
+				eval.call(window?, src)
 			)(src)
 
-		oldT = window.t
+		oldT = window?.t
 
 		@t: (key, interpolation...) =>
 			tr = undefined
@@ -141,14 +141,14 @@ base = (Observable) ->
 			tr
 
 		@t.noConflict = ->
-			window.t = oldT
+			window?.t = oldT
 			x18n.t
 
-		window.t = @t
+		window?.t = @t
 
 		@on 'dict:change', -> x18n.sortLocales()
 
-if module?
+if module? and module.exports?
 	Observable = require('observable_js')
 	module.exports = base(Observable)
 else if typeof define is 'function' and define.amd
