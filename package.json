@@ -1,13 +1,23 @@
 {
-	"name": "X18n",
-	"version": "1.0.2",
-	"private": true,
-	"scripts": {
-		"test": "grunt test"
-	},
-	"devDependencies": {
-		"grunt": "~0.3",
-		"grunt-contrib-coffee": "~0.3",
-		"grunt-mocha": "~0.1"
-	}
+  "name": "x18n",
+  "version": "1.0.3",
+  "description": "A JavaScript internationalisation library",
+  "github": "https://github.com/florian/x18n",
+  "license": "MIT",
+  "main": "lib/x18n.js",
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/florian/x18n.git"
+  },
+  "bugs": {
+    "url": "http://github.com/florian/x18n/issues"
+  },
+  "devDependencies": {
+	  "grunt": "~0.3",
+	  "grunt-contrib-coffee": "~0.3",
+	  "grunt-mocha": "~0.1"
+  }
 }
