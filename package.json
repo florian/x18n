@@ -16,8 +16,8 @@
     "url": "http://github.com/florian/x18n/issues"
   },
   "devDependencies": {
-	  "grunt": "~0.3",
-	  "grunt-contrib-coffee": "~0.3",
-	  "grunt-mocha": "~0.1"
+    "grunt": "^1.0.1",
+    "grunt-contrib-coffee": "^1.0.0",
+    "grunt-mocha": "^1.0.1"
   }
 }
