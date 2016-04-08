@@ -18,6 +18,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-coffee": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.0",
     "grunt-mocha": "^1.0.1"
   }
 }

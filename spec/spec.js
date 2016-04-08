@@ -163,12 +163,12 @@
         x18n.sortLocales();
         return expect(called).to.be["true"];
       });
+
       /*
       		it should contain the chosen local first if set
       		it should only contain available locales
       		it should not contain duplicate entries
-      */
-
+       */
     });
     describe('interpolate', function() {
       it('should support numeric interpolation', function() {

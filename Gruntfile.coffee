@@ -25,7 +25,8 @@ module.exports = (grunt) ->
 
 	grunt.loadNpmTasks('grunt-contrib-coffee')
 	grunt.loadNpmTasks('grunt-mocha')
+	grunt.loadNpmTasks('grunt-contrib-concat')
 
 	grunt.registerTask('test', 'mocha')
-	grunt.registerTask('release', 'coffee concat')
+	grunt.registerTask('release', ['coffee', 'concat'])
 	grunt.registerTask('default', 'release')
