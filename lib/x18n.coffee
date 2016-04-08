@@ -148,7 +148,10 @@ base = (Observable) ->
 
 		@on 'dict:change', -> x18n.sortLocales()
 
-if typeof define is 'function' and define.amd
+if module? and module.exports?
+	Observable = require('observable_js')
+	module.exports = base(Observable)
+else if typeof define is 'function' and define.amd
 	define 'x18n', ['observable'], (Observable) -> base(Observable)
 else
-	window.x18n = base(Observable)
+	window.x18n = base(window.Observable)
