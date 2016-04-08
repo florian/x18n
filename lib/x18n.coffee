@@ -148,7 +148,7 @@ base = (Observable) ->
 
 		@on 'dict:change', -> x18n.sortLocales()
 
-if module? and module.exports?
+if module?
 	Observable = require('observable_js')
 	module.exports = base(Observable)
 else if typeof define is 'function' and define.amd
