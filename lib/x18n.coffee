@@ -117,11 +117,11 @@ base = (Observable) ->
 			if typeof tr is 'string'
 				tr = @interpolate(tr, interpolation...)
 			else if tr isnt undefined
-				tr.plural = (n) ->
+				tr.plural = (n) =>
 					if n of tr
 						tr[n]
 					else
-						x18n.interpolate(tr.n, n)
+						@interpolate(tr.n, n)
 
 			tr
 
