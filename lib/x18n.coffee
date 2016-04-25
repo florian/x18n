@@ -49,8 +49,7 @@ base = (Observable) ->
 
 			@utils.merge(@dict[local], dict)
 
-			# Todo: Pass the local
-			@trigger('dict:change')
+			@trigger('dict:change', local)
 
 		set: (local) ->
 			@chosenLocal = local
