@@ -16,7 +16,7 @@
     "url": "http://github.com/florian/x18n/issues"
   },
   "dependencies": {
-    "observable_js": "^2.0.0"
+    "observable_js": "^2.0.1"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
