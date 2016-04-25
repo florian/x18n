@@ -2,17 +2,17 @@ base = (Observable) ->
 	class X18n extends Observable
 		constructor: ->
 			super()
+
+			@dict = {}
+			@defaultlocal = 'en'
+			@chosenLocal = undefined
+
+			@availableLocales = []
+			@locales = []
+
+			@missingTranslations = {}
+
 			@on 'dict:change', => @sortLocales()
-
-		dict: {}
-
-		defaultlocal: 'en'
-		chosenLocal: undefined
-
-		availableLocales: []
-		locales: []
-
-		missingTranslations: {}
 
 		utils:
 			merge: (one, two) ->
@@ -97,11 +97,6 @@ base = (Observable) ->
 					interpolation[Number(n) - 1]
 
 			str
-
-		globalEval: (src) ->
-			(window?.execScript || (src) ->
-				eval.call(window?, src)
-			)(src)
 
 		t: (key, interpolation...) =>
 			tr = undefined
