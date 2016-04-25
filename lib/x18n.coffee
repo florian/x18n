@@ -49,6 +49,7 @@ base = (Observable) ->
 
 			@utils.merge(@dict[local], dict)
 
+			# Todo: Pass the local
 			@trigger('dict:change')
 
 		set: (local) ->
@@ -59,6 +60,7 @@ base = (Observable) ->
 			@defaultLocal = local
 			@sortLocales()
 
+		# Todo: This would throw on node
 		detectLocal: -> navigator.userLanguage || navigator.language
 
 		similiarLocales: (local) ->
@@ -72,9 +74,9 @@ base = (Observable) ->
 				@chosenLocal
 				@similiarLocales(@chosenLocal)...
 				@detectLocal(),
-				@similiarLocales(@detectLocal)...
+				@similiarLocales(@detectLocal())...
 				@defaultlocal,
-				@similiarLocales(@defaultlocal)
+				@similiarLocales(@defaultlocal)...
 				'en'
 				@similiarLocales('en')...,
 			]
@@ -86,6 +88,8 @@ base = (Observable) ->
 
 			@locales = @utils.unique(locales)
 
+			# Todo: Only trigger if the first language actually changed?
+			# Todo: Pass the new first and the old first language
 			@trigger('lang:change')
 
 		interpolate: (str, interpolation...) ->
