@@ -1,9 +1,11 @@
 (function() {
-  var dict, utils;
+  var dict, t, utils;
 
   utils = x18n.utils;
 
   dict = x18n.dict;
+
+  t = x18n.t;
 
   x18n.__asyncEvents = false;
 
@@ -191,8 +193,7 @@
       });
     });
     return describe('t', function() {
-      it('should be defined in the global and x18n scope', function() {
-        expect(window).to.have.property('t');
+      it('should be defined', function() {
         return expect(x18n).to.have.property('t');
       });
       it('should return the translation', function() {
@@ -260,7 +261,7 @@
         });
         return expect(t('users')).to.have.property('plural').that.is.a('function');
       });
-      it('should support pluralisation', function() {
+      return it('should support pluralisation', function() {
         x18n.register('en', {
           users: {
             1: 'There is 1 user online',
@@ -269,14 +270,6 @@
         });
         expect(t('users').plural(1)).to.equal('There is 1 user online');
         return expect(t('users').plural(3)).to.equal('There are 3 users online');
-      });
-      return describe('noConflict', function() {
-        return it('should restore the old t and return t', function() {
-          var t;
-          t = window.t.noConflict();
-          expect(t).to.equal(x18n.t);
-          return window.t = t;
-        });
       });
     });
   });

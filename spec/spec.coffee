@@ -1,5 +1,6 @@
 utils = x18n.utils
 dict = x18n.dict
+t = x18n.t
 
 # Observable triggers events async by default, which makes it harder to write
 # tests, so we'll disable it
@@ -120,8 +121,7 @@ describe 'x18n', ->
 			expect(s).to.equal('Hello a and b')
 
 	describe 't', ->
-		it 'should be defined in the global and x18n scope', ->
-			expect(window).to.have.property('t')
+		it 'should be defined', ->
 			expect(x18n).to.have.property('t')
 
 		it 'should return the translation', ->
@@ -183,9 +183,3 @@ describe 'x18n', ->
 
 			expect(t('users').plural(1)).to.equal('There is 1 user online')
 			expect(t('users').plural(3)).to.equal('There are 3 users online')
-
-		describe 'noConflict', ->
-			it 'should restore the old t and return t', ->
-				t = window.t.noConflict()
-				expect(t).to.equal(x18n.t)
-				window.t = t
