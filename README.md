@@ -1,7 +1,8 @@
 # X18n [![Build Status](https://travis-ci.org/florian/x18n.png)](https://travis-ci.org/florian/x18n)
 
 X18n is a JavaScript library that helps you to translate web apps that do a lot on the client side. It automatically detects the user language and sorts the available translations smartly. It has nice interpolation and pluralisation features that are also compatible with Ruby's [r18n](https://github.com/ai/r18n) gem.
-If you use React it's super easy to translate your app using [react-x18n](https://github.com/marco-a/react-x18n)
+
+If you use React it's super easy to translate your app using [react-x18n](https://github.com/marco-a/react-x18n).
 
 ## Overview
 
