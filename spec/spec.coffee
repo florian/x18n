@@ -96,10 +96,19 @@ describe 'x18n', ->
 			expect(x18n.locales).to.be.an('array')
 
 		it 'should trigger lang:change', ->
+			x18n.register('test', { a: 'a' })
+			x18n.register('en', { a: 'a' })
+
 			called = false
 			x18n.on 'lang:change', -> called = true
+
+			x18n.defaultLocal = 'test'
 			x18n.sortLocales()
+
 			expect(called).to.be.true
+
+			x18n.defaultLocal = 'en'
+			x18n.sortLocales()
 
 		###
 		it should contain the chosen local first if set

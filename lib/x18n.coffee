@@ -49,7 +49,7 @@ base = (Observable) ->
 
 			@utils.merge(@dict[local], dict)
 
-			@trigger('dict:change', local)
+			@trigger('dict:change', [local])
 
 		set: (local) ->
 			@chosenLocal = local
@@ -69,12 +69,14 @@ base = (Observable) ->
 				l.toLowerCase().indexOf(local) is 0
 
 		sortLocales: ->
+			oldLocales = @locales.slice()
+
 			_locales = [
 				@chosenLocal
 				@similiarLocales(@chosenLocal)...
 				@detectLocal(),
 				@similiarLocales(@detectLocal())...
-				@defaultlocal,
+				@defaultLocal,
 				@similiarLocales(@defaultlocal)...
 				'en'
 				@similiarLocales('en')...,
@@ -87,9 +89,8 @@ base = (Observable) ->
 
 			@locales = @utils.unique(locales)
 
-			# Todo: Only trigger if the first language actually changed?
-			# Todo: Pass the new first and the old first language
-			@trigger('lang:change')
+			if oldLocales.join(',') isnt @locales.join(',')
+				@trigger('lang:change', [@locales, oldLocales])
 
 		interpolate: (str, interpolation...) ->
 			if @utils.isPlainObject(interpolation[0])

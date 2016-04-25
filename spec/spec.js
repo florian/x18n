@@ -159,12 +159,21 @@
       });
       return it('should trigger lang:change', function() {
         var called;
+        x18n.register('test', {
+          a: 'a'
+        });
+        x18n.register('en', {
+          a: 'a'
+        });
         called = false;
         x18n.on('lang:change', function() {
           return called = true;
         });
+        x18n.defaultLocal = 'test';
         x18n.sortLocales();
-        return expect(called).to.be["true"];
+        expect(called).to.be["true"];
+        x18n.defaultLocal = 'en';
+        return x18n.sortLocales();
       });
 
       /*
