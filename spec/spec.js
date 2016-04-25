@@ -5,6 +5,8 @@
 
   dict = x18n.dict;
 
+  x18n.__asyncEvents = false;
+
   describe('x18n', function() {
     afterEach(function() {
       dict = x18n.dict = {};

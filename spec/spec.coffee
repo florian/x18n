@@ -1,6 +1,10 @@
 utils = x18n.utils
 dict = x18n.dict
 
+# Observable triggers events async by default, which makes it harder to write
+# tests, so we'll disable it
+x18n.__asyncEvents = false
+
 describe 'x18n', ->
 	afterEach ->
 		dict = x18n.dict = {}
