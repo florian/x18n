@@ -51,6 +51,10 @@ x18n.on(['lang:change', 'dict:change'], function () {
 
 X18n has no opinion about views. Because of this the x18n core stays small. Adapters are x18n extensions that are responsible for updating the view when translations change.
 
-The idea is that you are only responsible for registering translations, optionaly defining the user's language and adding data bindings to your HTML elements. The adapter will then, nearly instantly, update your HTML whenever the language changes or the dictionary is updated.
+The idea is that you are only responsible for registering translations, optionaly defining the user's language and adding data bindings to your HTML elements. The adapter will then update your HTML whenever the language changes or the dictionary is updated.
 
-Currently there's just a [jQuery adapter](https://github.com/florian/jQuery.x18n/). An adapter using [component](https://github.com/component)'s DOM libraries and an adapter for express.js are planned.
+Currently there are adapters available for:
+
+- [React](https://github.com/marco-a/react-x18n) (*recommended*)
+- [Handlebars](https://github.com/SBoudrias/handlebars-x18n)
+- [jQuery](https://github.com/florian/jQuery.x18n/)
