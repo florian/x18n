@@ -1,26 +1,20 @@
 base = (Observable) ->
-	class x18n
+	class X18n extends Observable
+		constructor: ->
+			super()
+			@on 'dict:change', => @sortLocales()
 
-		@dict: {}
+		dict: {}
 
-		@defaultlocal: 'en'
-		@chosenLocal: undefined
+		defaultlocal: 'en'
+		chosenLocal: undefined
 
-		@availableLocales: []
-		@locales: []
+		availableLocales: []
+		locales: []
 
-		@dynamicBindings: true
+		missingTranslations: {}
 
-		@missingTranslations: {}
-
-		eventSystem = new Observable
-		@__observable = eventSystem.__observable
-		@on = eventSystem.on
-		@once = eventSystem.once
-		@off = eventSystem.off
-		@trigger = eventSystem.trigger
-
-		@utils:
+		utils:
 			merge: (one, two) ->
 				for k, v of two
 				   if typeof v is 'object' and typeof one[k] is 'object'
@@ -48,7 +42,7 @@ base = (Observable) ->
 			isPlainObject: (value) ->
 				!!value && Object::toString.call(value) is '[object Object]'
 
-		@register: (local, dict) ->
+		register: (local, dict) ->
 			unless local of @dict
 				@dict[local] = {}
 				@availableLocales.push(local)
@@ -57,23 +51,23 @@ base = (Observable) ->
 
 			@trigger('dict:change')
 
-		@set: (local) ->
+		set: (local) ->
 			@chosenLocal = local
 			@sortLocales()
 
-		@setDefault: (local) ->
+		setDefault: (local) ->
 			@defaultLocal = local
 			@sortLocales()
 
-		@detectLocal: -> navigator.userLanguage || navigator.language
+		detectLocal: -> navigator.userLanguage || navigator.language
 
-		@similiarLocales: (local) ->
+		similiarLocales: (local) ->
 			local = String(local).slice(0, 2).toLowerCase()
 			@utils.filter @availableLocales, (l) ->
 				return false if local is l
 				l.toLowerCase().indexOf(local) is 0
 
-		@sortLocales: ->
+		sortLocales: ->
 			_locales = [
 				@chosenLocal
 				@similiarLocales(@chosenLocal)...
@@ -94,29 +88,22 @@ base = (Observable) ->
 
 			@trigger('lang:change')
 
-		@resolveBindings: (str) ->
-			str = String(str)
-			return str unless @dynamicBindings
-			str.replace /\$\{([^}]+)\}/g, (_, src) ->
-				x18n.globalEval src
-
-		@interpolate: (str, interpolation...) ->
+		interpolate: (str, interpolation...) ->
 			if @utils.isPlainObject(interpolation[0])
 				str = str.replace /%\{([^}]+)\}/g, (_, key) ->
 					interpolation[0][key]
 			else
 				str = str.replace /%(\d+)/g, (_, n) ->
 					interpolation[Number(n) - 1]
-			@resolveBindings(str)
 
-		@globalEval: (src) ->
+			str
+
+		globalEval: (src) ->
 			(window?.execScript || (src) ->
 				eval.call(window?, src)
 			)(src)
 
-		oldT = window?.t
-
-		@t: (key, interpolation...) =>
+		t: (key, interpolation...) =>
 			tr = undefined
 			for local in @locales
 				tr = @utils.getByDotNotation(@dict[local], key)
@@ -129,10 +116,9 @@ base = (Observable) ->
 					@trigger('missing-translation', [local, key])
 
 			if typeof tr is 'string'
-				tr = @interpolate(@resolveBindings(tr), interpolation...)
+				tr = @interpolate(tr, interpolation...)
 			else if tr isnt undefined
 				tr.plural = (n) ->
-					n = x18n.resolveBindings(n)
 					if n of tr
 						tr[n]
 					else
@@ -140,13 +126,7 @@ base = (Observable) ->
 
 			tr
 
-		@t.noConflict = ->
-			window?.t = oldT
-			x18n.t
-
-		window?.t = @t
-
-		@on 'dict:change', -> x18n.sortLocales()
+	return new X18n()
 
 if module? and module.exports?
 	Observable = require('observable_js')

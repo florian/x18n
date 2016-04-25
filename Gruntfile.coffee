@@ -13,7 +13,7 @@ module.exports = (grunt) ->
 				stripBanners: true
 			dist:
 				src: ['<banner>', 'node_modules/observable_js/lib/observable.js', 'lib/x18n.js']
-				dest: 'lib/x18n.js'
+				dest: 'lib/x18n_build.js'
 
 		mocha:
 			all:
