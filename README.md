@@ -1,10 +1,11 @@
 # X18n [![Build Status](https://travis-ci.org/florian/x18n.png)](https://travis-ci.org/florian/x18n)
 
-X18n is a JavaScript library that helps you to translate web apps that do a lot on the client side. It automatically detects the user language and sorts the available translations smartly. It has nice interpolation and pluralisation features that are compatible with Ruby's [r18n](https://github.com/ai/r18n) gem.
+X18n is a JavaScript library that helps you to translate web apps that do a lot on the client side. It automatically detects the user language and sorts the available translations smartly. It has nice interpolation and pluralisation features that are also compatible with Ruby's [r18n](https://github.com/ai/r18n) gem.
+If you use React it's super easy to translate your app using [react-x18n](https://github.com/marco-a/react-x18n)
 
 ## Overview
 
-*The translations are rougly adopted from r18n to show the compability.*
+`npm install x18n` or just grab [x18n_build.js](https://raw.githubusercontent.com/florian/x18n/master/lib/x18n_build.js)
 
 ```js
 x18n.register('en', {
@@ -19,6 +20,7 @@ x18n.register('en', {
   }
 });
 
+let t = x18n.t;
 t('user.logout'); // 'Logout'
 t('user.greeting', 'John'); // 'Welcome John'
 t('user.browser', {browser: 'Chromium'}); // 'You are using Chromium.'
@@ -33,17 +35,16 @@ x18n.on(['lang:change', 'dict:change'], function () {
 
 ## Features
 
-- [r18n](https://github.com/ai/r18n) compatible interpolation and pluralisation: All you need to do to use your r18n local dictionaries in x18n is to convert them from YAML to JSON and to register the objects.
 - Auto detects the user language.
-- Easy interpolation and pluralisation.
-- Support for [dynamic data bindings](https://github.com/florian/x18n/wiki/Dynamic-data-bindings)
-- An event system that enables you to easily re-render the UI when new translations are added or the language changes.
+- Straightforward interpolation and pluralisation.
+- Super easy to use with React
+- If you don't use React: An event system that enables you to easily re-render the UI when new translations are added or the language changes.
 - If a translation is missing x18n will choose a translation from a similiar locale, saves missing translations in an accessible object and fires an event.
+- [r18n](https://github.com/ai/r18n) compatible interpolation and pluralisation: All you need to do to use your r18n local dictionaries in x18n is to convert them from YAML to JSON and to register the objects.
 
 ## Wiki entries
 
 - **[Getting started](https://github.com/florian/x18n/wiki/Getting-started)**
-- [Dynamic data bindings](https://github.com/florian/x18n/wiki/Dynamic-data-bindings)
 - [Dealing with missing translations](https://github.com/florian/x18n/wiki/Dealing-with-missing-translations)
 - [Using a library that defines `window.t` together with x18n](https://github.com/florian/x18n/wiki/t.noConflict)
 
