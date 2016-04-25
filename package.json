@@ -16,12 +16,13 @@
     "url": "http://github.com/florian/x18n/issues"
   },
   "dependencies": {
-	"observable_js": "^1.2.1"
+    "observable_js": "^1.2.1"
   },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-coffee": "^1.0.0",
     "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha": "^1.0.1"
   }
 }
