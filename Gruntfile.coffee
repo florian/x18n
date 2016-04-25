@@ -1,9 +1,6 @@
 module.exports = (grunt) ->
 
 	grunt.initConfig
-		meta:
-			banner: '// ' + grunt.file.read('LICENSE').split("\n")[0]
-
 		coffee:
 			compile:
 				files:
@@ -11,8 +8,11 @@ module.exports = (grunt) ->
 					'spec/spec.js': 'spec/spec.coffee'
 
 		concat:
+			options:
+				banner: '// ' + grunt.file.read('LICENSE').split("\n")[0] + "\n"
+				stripBanners: true
 			dist:
-				src: ['<banner>', 'lib/observable/lib/observable.js', 'lib/x18n.js']
+				src: ['<banner>', 'node_modules/observable_js/lib/observable.js', 'lib/x18n.js']
 				dest: 'lib/x18n.js'
 
 		mocha:
@@ -22,7 +22,9 @@ module.exports = (grunt) ->
 
 		watch:
 			files: ['lib/x18n.coffee', 'spec/spec.coffee']
+			tasks: 'release'
 
+	grunt.loadNpmTasks('grunt-contrib-watch')
 	grunt.loadNpmTasks('grunt-contrib-coffee')
 	grunt.loadNpmTasks('grunt-mocha')
 	grunt.loadNpmTasks('grunt-contrib-concat')
