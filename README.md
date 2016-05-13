@@ -40,7 +40,7 @@ x18n.on(['lang:change', 'dict:change'], function () {
 - Straightforward interpolation and pluralisation.
 - Super easy to use with React
 - If you don't use React: An event system that enables you to easily re-render the UI when new translations are added or the language changes.
-- If a translation is missing x18n will choose a translation from a similiar locale, saves missing translations in an accessible object and fires an event.
+- If a translation is missing x18n will choose a translation from a similiar locale, will save missing translations in an accessible object and will fire an event.
 - [r18n](https://github.com/ai/r18n) compatible interpolation and pluralisation: All you need to do to use your r18n local dictionaries in x18n is to convert them from YAML to JSON and to register the objects.
 
 ## Wiki entries
