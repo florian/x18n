@@ -131,6 +131,6 @@ if module? and module.exports?
 	Observable = require('observable_js')
 	module.exports = base(Observable)
 else if typeof define is 'function' and define.amd
-	define 'x18n', ['observable'], (Observable) -> base(Observable)
+	define 'x18n', ['observable_js'], (Observable) -> base(Observable)
 else
 	window.x18n = base(window.Observable)
