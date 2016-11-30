@@ -60,3 +60,7 @@ Currently there are adapters available for:
 - [React](https://github.com/marco-a/react-x18n) (*recommended*)
 - [Handlebars](https://github.com/SBoudrias/handlebars-x18n)
 - [jQuery](https://github.com/florian/jQuery.x18n/)
+
+## TypeScript
+
+There's a TypeScript adapter available at [anwfr/x18n-ts](https://github.com/anwfr/x18n-ts).
