@@ -4,7 +4,7 @@ base = (Observable) ->
 			super()
 
 			@dict = {}
-			@defaultlocal = 'en'
+			@defaultLocal = 'en'
 			@chosenLocal = undefined
 
 			@availableLocales = []
@@ -77,7 +77,7 @@ base = (Observable) ->
 				@detectLocal(),
 				@similiarLocales(@detectLocal())...
 				@defaultLocal,
-				@similiarLocales(@defaultlocal)...
+				@similiarLocales(@defaultLocal)...
 				'en'
 				@similiarLocales('en')...,
 			]
